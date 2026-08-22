@@ -1,0 +1,90 @@
+@theme {
+  --font-sans: var(--font-family-sans);
+
+  --color-brand-blue: #003da5;
+  --color-brand-blue-deep: #002a73;
+  --color-brand-blue-bright: #0050cc;
+  --color-accent-orange: #ff8a4a;
+  --color-ink: #15171a;
+  --color-muted: #5d6470;
+  --color-canvas: #ffffff;
+  --color-surface-subtle: #f4f6f8;
+  --color-border-subtle: #dce1e7;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+
+  --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  /* Temporäre systemnahe Neo-Grotesk. Austausch erfolgt zentral hier. */
+  --font-family-sans:
+    'Inter Variable', Inter, 'Helvetica Neue', Helvetica, Arial, system-ui,
+    sans-serif;
+
+  --color-brand: #003da5;
+  --color-brand-deep: #002a73;
+  --color-brand-bright: #0050cc;
+  --color-accent: #ff8a4a;
+  --color-text: #15171a;
+  --color-text-muted: #5d6470;
+  --color-background: #ffffff;
+  --color-surface-subtle: #f4f6f8;
+  --color-border: #dce1e7;
+  --color-focus: #003da5;
+
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.375rem;
+  --font-size-2xl: 1.75rem;
+  --font-size-3xl: clamp(2rem, 4vw, 3.75rem);
+
+  --line-height-tight: 1.08;
+  --line-height-heading: 1.16;
+  --line-height-body: 1.65;
+  --letter-spacing-heading: -0.025em;
+  --letter-spacing-ui: -0.01em;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  --container-wide: 80rem;
+  --container-content: 68rem;
+  --container-reading: 46rem;
+  --page-gutter: clamp(1.25rem, 4vw, 4.5rem);
+
+  --radius-small: 4px;
+  --radius-medium: 6px;
+  --radius-large: 8px;
+
+  --button-height: 3.25rem;
+  --button-padding-inline: 1.5rem;
+  --button-font-size: 0.9375rem;
+  --button-font-weight: 700;
+  --button-radius: var(--radius-medium);
+
+  --focus-width: 3px;
+  --focus-offset: 3px;
+
+  --motion-duration-fast: 160ms;
+  --motion-duration-standard: 280ms;
+  --motion-duration-slow: 520ms;
+  --motion-ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
+}

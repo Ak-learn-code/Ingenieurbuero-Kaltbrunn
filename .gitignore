@@ -6,3 +6,16 @@ serve.ps1
 .claude/
 __pycache__/
 *.pyc
+
+# Astro / Node
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
+
+# Test- und Coverage-Ausgaben
+coverage/
+playwright-report/
+test-results/

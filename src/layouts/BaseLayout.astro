@@ -1,0 +1,29 @@
+---
+import '@styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: URL | string;
+  noIndex?: boolean;
+}
+
+const { title, description, canonical, noIndex = false } = Astro.props;
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#003DA5" />
+    <meta name="description" content={description} />
+    <meta name="format-detection" content="telephone=no" />
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
+    {canonical && <link rel="canonical" href={canonical} />}
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

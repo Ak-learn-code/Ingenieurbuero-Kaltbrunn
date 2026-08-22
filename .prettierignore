@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.astro/
+KALTBRUNN_REDESIGN_MASTERPROMPT.md
+README.md
+index.html
+referenzen.html
+bau_referenzen.py
+fotos/**/*.py
+marke/**/*.py
+marke/*.svg
+fotos/
+*.jpeg
+.github/workflows/pages.yml
+src/assets/

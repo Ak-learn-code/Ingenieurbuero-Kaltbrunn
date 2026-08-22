@@ -1,89 +1,17 @@
 ---
+import Header from '@components/Header.astro';
+import Hero from '@components/Hero.astro';
+import { seo } from '@data/seo';
 import BaseLayout from '@layouts/BaseLayout.astro';
 
-const title = 'Technische Basis – Ingenieurbüro Kaltbrunn';
-const description =
-  'Technische Testseite der Astro-Migration. Noch kein Website-Redesign.';
+const title = seo.defaultTitle;
+const description = seo.defaultDescription;
 ---
 
 <BaseLayout {title} {description} noIndex>
-  <main class="technical-check container-reading">
-    <p class="technical-check__phase">Phase 0–1</p>
-    <h1>Technische Basis</h1>
-    <p>
-      Astro, TypeScript, Tailwind CSS und die zentralen Design-Tokens sind
-      eingerichtet. Sichtbare Website-Sektionen folgen erst nach Freigabe.
-    </p>
-    <a class="button-base button-primary" href="#token-check">
-      Focus State prüfen
-    </a>
-    <dl id="token-check" aria-label="Zentrale Design-Tokens">
-      <div>
-        <dt>Brand Blue</dt>
-        <dd>#003DA5</dd>
-      </div>
-      <div>
-        <dt>Accent Orange</dt>
-        <dd>#ff8a4a</dd>
-      </div>
-      <div>
-        <dt>Radius</dt>
-        <dd>4–8 px</dd>
-      </div>
-    </dl>
+  <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
+  <Header />
+  <main id="main-content">
+    <Hero />
   </main>
 </BaseLayout>
-
-<style>
-  .technical-check {
-    display: grid;
-    min-height: 100svh;
-    align-content: center;
-    justify-items: start;
-    gap: var(--space-6);
-    padding-block: var(--space-16);
-  }
-
-  .technical-check__phase {
-    margin: 0;
-    color: var(--color-brand);
-    font-size: var(--font-size-sm);
-    font-weight: 700;
-  }
-
-  h1 {
-    margin: 0;
-    font-size: var(--font-size-3xl);
-    line-height: var(--line-height-tight);
-    letter-spacing: var(--letter-spacing-heading);
-  }
-
-  p {
-    max-width: 42rem;
-    margin: 0;
-    color: var(--color-text-muted);
-  }
-
-  dl {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-8);
-    margin: var(--space-4) 0 0;
-    padding: 0;
-  }
-
-  dl div {
-    display: grid;
-    gap: var(--space-1);
-  }
-
-  dt {
-    color: var(--color-text-muted);
-    font-size: var(--font-size-xs);
-  }
-
-  dd {
-    margin: 0;
-    font-weight: 700;
-  }
-</style>

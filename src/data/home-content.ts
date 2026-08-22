@@ -4,8 +4,33 @@ export const heroContent = {
     'Ihr Unfall. Ihr Recht. Mein unabhängiges Gutachten schützt Ihr Geld.',
   subheading:
     'Ihr freier Kfz-Sachverständiger im Kreis Bergstraße sowie im Rhein-Main- und Rhein-Neckar-Gebiet. Absolut weisungsfrei, fachlich kompromisslos und direkt für Sie erreichbar.',
-  primaryCta: 'Jetzt anrufen',
-  secondaryCta: 'Online-Anfrage senden',
+  reviewProof: {
+    provider: 'Google',
+    label: 'Google-Bewertungen',
+    rating: null,
+    reviewCount: null,
+  },
+  primaryCta: {
+    label: 'Leistungen ansehen',
+    mobileLabel: 'Leistungen',
+    href: '/#leistungen',
+  },
+  secondaryCta: {
+    label: 'Referenzen ansehen',
+    mobileLabel: 'Referenzen',
+    href: '/referenzen/',
+  },
+} as const;
+
+export const heroContactContent = {
+  qualification: 'B. Eng. Maschinenbau · Qualitätsingenieur',
+  localRole: 'Kfz-Sachverständiger in Heppenheim',
+  contactLabel: 'Direkt bei mir melden',
+  whatsappLabel: 'Per WhatsApp schreiben',
+  trustStatements: [
+    'Erstkontakt innerhalb 24 Stunden',
+    'Bei unverschuldetem Unfall trägt die Gegenseite die Gutachterkosten.',
+  ],
 } as const;
 
 export const trustFacts = [

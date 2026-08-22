@@ -68,6 +68,7 @@
   --container-content: 68rem;
   --container-reading: 46rem;
   --page-gutter: clamp(1.25rem, 4vw, 4.5rem);
+  --header-height: clamp(4.5rem, 7vw, 5.75rem);
 
   --radius-small: 4px;
   --radius-medium: 6px;

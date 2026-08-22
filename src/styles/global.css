@@ -25,6 +25,10 @@ body {
   line-height: var(--line-height-body);
 }
 
+body.menu-is-open {
+  overflow: hidden;
+}
+
 button,
 input,
 select,
@@ -42,6 +46,24 @@ video {
 
 a {
   color: inherit;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  top: var(--space-3);
+  left: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-background);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(calc(-100% - var(--space-6)));
+}
+
+.skip-link:focus {
+  transform: translateY(0);
 }
 
 :focus-visible {
@@ -119,5 +141,9 @@ a {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+
+  .skip-link {
+    transition: none;
   }
 }

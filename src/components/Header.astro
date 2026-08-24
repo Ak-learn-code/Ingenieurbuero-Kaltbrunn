@@ -2,11 +2,23 @@
 import logo from '@assets/brand/legacy/k.svg';
 import { business } from '@data/business';
 import { primaryNavigation, primaryNavigationCta } from '@data/navigation';
+
+const baseUrl = import.meta.env.BASE_URL;
+const normalizedBaseUrl = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
+const isHomepage =
+  Astro.url.pathname === normalizedBaseUrl ||
+  Astro.url.pathname === `${normalizedBaseUrl}index.html`;
+const resolveHomepageAnchor = (href: string) =>
+  isHomepage ? href : `${normalizedBaseUrl}${href}`;
 ---
 
 <header class="site-header" data-site-header>
   <div class="site-header__inner">
-    <a class="site-header__brand" href="#hero" aria-label={business.name}>
+    <a
+      class="site-header__brand"
+      href={isHomepage ? '#hero' : normalizedBaseUrl}
+      aria-label={`${business.name} – zur Startseite`}
+    >
       <img src={logo.src} alt="" width="43" height="41" />
       <span class="site-header__wordmark">
         <span>Ingenieurbüro</span>
@@ -19,14 +31,20 @@ import { primaryNavigation, primaryNavigationCta } from '@data/navigation';
         {
           primaryNavigation.map((item) => (
             <li>
-              <a href={item.href}>{item.label}</a>
+              <a href={resolveHomepageAnchor(item.href)}>{item.label}</a>
             </li>
           ))
         }
       </ul>
     </nav>
 
-    <a class="site-header__desktop-cta" href={primaryNavigationCta.href}>
+    <a
+      class="site-header__desktop-cta"
+      href={business.phone.whatsapp}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={`${primaryNavigationCta.label} – per WhatsApp`}
+    >
       {primaryNavigationCta.label}
     </a>
 
@@ -56,7 +74,7 @@ import { primaryNavigation, primaryNavigationCta } from '@data/navigation';
       {
         primaryNavigation.map((item) => (
           <li>
-            <a href={item.href}>{item.label}</a>
+            <a href={resolveHomepageAnchor(item.href)}>{item.label}</a>
           </li>
         ))
       }

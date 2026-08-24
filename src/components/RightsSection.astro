@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import AiDisclosureMarker from '@components/AiDisclosureMarker.astro';
 import rightsCostReimbursement from '@assets/images/generated/cards/rights-cost-reimbursement.png';
 import rightsHiddenDamage from '@assets/images/generated/cards/rights-hidden-damage.png';
 import rightsIndependentChoice from '@assets/images/generated/cards/rights-independent-choice.png';
@@ -24,7 +25,9 @@ const rightsMedia = [
 <section class="rights" id="ihr-recht" aria-labelledby="rights-heading">
   <div class="rights__inner container-wide">
     <header class="rights__header">
-      <h2 id="rights-heading">{rightsContent.heading}</h2>
+      <h2 id="rights-heading">
+        {rightsContent.heading}<AiDisclosureMarker />
+      </h2>
       <p>{rightsContent.introduction}</p>
     </header>
 

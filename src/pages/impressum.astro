@@ -1,0 +1,19 @@
+---
+import { Content } from '@content/legal/impressum.md';
+import LegalPage from '@components/LegalPage.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+
+const title = 'Impressum | Ingenieurbüro Kaltbrunn';
+const description =
+  'Anbieterkennzeichnung und rechtliche Hinweise des Ingenieurbüros Kaltbrunn in Heppenheim.';
+---
+
+<BaseLayout {title} {description} noIndex>
+  <LegalPage
+    eyebrow="Rechtliches"
+    title="Impressum"
+    introduction="Anbieterkennzeichnung und rechtliche Hinweise des Ingenieurbüros Kaltbrunn."
+  >
+    <Content />
+  </LegalPage>
+</BaseLayout>

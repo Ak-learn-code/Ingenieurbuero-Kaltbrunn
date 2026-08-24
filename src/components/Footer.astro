@@ -7,6 +7,15 @@ import { legalNavigation, primaryNavigation } from '@data/navigation';
 
 const currentYear = new Date().getFullYear();
 const location = `${business.address.postalCode} ${business.address.city}`;
+const baseUrl = import.meta.env.BASE_URL;
+const normalizedBaseUrl = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
+const isHomepage =
+  Astro.url.pathname === normalizedBaseUrl ||
+  Astro.url.pathname === `${normalizedBaseUrl}index.html`;
+const resolveHomepageAnchor = (href: string) =>
+  isHomepage ? href : `${normalizedBaseUrl}${href}`;
+const resolveLegalHref = (href: string) =>
+  `${normalizedBaseUrl.replace(/\/$/, '')}${href}`;
 ---
 
 <footer class="site-footer" id="footer" data-site-footer>
@@ -27,7 +36,7 @@ const location = `${business.address.postalCode} ${business.address.city}`;
         <div class="site-footer__brand-column">
           <a
             class="site-footer__brand"
-            href="#hero"
+            href={isHomepage ? '#hero' : normalizedBaseUrl}
             aria-label={`${business.name} – zur Startseite`}
           >
             <img src={logo.src} alt="" width="43" height="41" />
@@ -51,7 +60,7 @@ const location = `${business.address.postalCode} ${business.address.city}`;
             {
               primaryNavigation.map((item) => (
                 <li>
-                  <a href={item.href}>{item.label}</a>
+                  <a href={resolveHomepageAnchor(item.href)}>{item.label}</a>
                 </li>
               ))
             }
@@ -82,6 +91,11 @@ const location = `${business.address.postalCode} ${business.address.city}`;
         </div>
       </div>
 
+      <p class="site-footer__ai-note" id="ki-hinweis">
+        ¹ Illustrative Darstellungen in gekennzeichneten Bereichen sind teilweise
+        KI-generiert und dienen ausschließlich der visuellen Darstellung.
+      </p>
+
       <div class="site-footer__bottom">
         <p>© {currentYear} {business.name}</p>
         <nav aria-label="Rechtliche Hinweise">
@@ -89,7 +103,7 @@ const location = `${business.address.postalCode} ${business.address.city}`;
             {
               legalNavigation.map((item) => (
                 <li>
-                  <a href={item.href}>{item.label}</a>
+                  <a href={resolveLegalHref(item.href)}>{item.label}</a>
                 </li>
               ))
             }
@@ -336,6 +350,19 @@ const location = `${business.address.postalCode} ${business.address.city}`;
     font-size: 0.82rem;
   }
 
+  .site-footer__ai-note {
+    max-width: 48rem;
+    margin: auto 0 1.25rem;
+    color: rgb(255 255 255 / 46%);
+    font-size: 0.72rem;
+    line-height: 1.55;
+    scroll-margin-top: calc(var(--header-height) + 2rem);
+  }
+
+  .site-footer__ai-note + .site-footer__bottom {
+    margin-top: 0;
+  }
+
   .site-footer__bottom p {
     margin: 0;
   }
@@ -448,6 +475,12 @@ const location = `${business.address.postalCode} ${business.address.city}`;
       align-items: flex-start;
       flex-direction: column;
       padding-bottom: 0.85rem;
+    }
+
+    .site-footer__ai-note {
+      margin-top: auto;
+      margin-bottom: 1rem;
+      font-size: 0.7rem;
     }
 
     .site-footer__signature {

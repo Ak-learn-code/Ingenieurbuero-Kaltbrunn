@@ -1,0 +1,19 @@
+---
+import { Content } from '@content/legal/datenschutz.md';
+import LegalPage from '@components/LegalPage.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+
+const title = 'Datenschutz | Ingenieurbüro Kaltbrunn';
+const description =
+  'Datenschutzerklärung des Ingenieurbüros Kaltbrunn in Heppenheim.';
+---
+
+<BaseLayout {title} {description} noIndex>
+  <LegalPage
+    eyebrow="Rechtliches"
+    title="Datenschutz"
+    introduction="Informationen zur Verarbeitung Ihrer personenbezogenen Daten auf dieser Website."
+  >
+    <Content />
+  </LegalPage>
+</BaseLayout>

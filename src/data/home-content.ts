@@ -13,12 +13,12 @@ export const heroContent = {
   primaryCta: {
     label: 'Leistungen ansehen',
     mobileLabel: 'Leistungen',
-    href: '/#leistungen',
+    href: '#leistungen',
   },
   secondaryCta: {
     label: 'Referenzen ansehen',
     mobileLabel: 'Referenzen',
-    href: '/#referenzen',
+    href: '#referenzen',
   },
 } as const;
 

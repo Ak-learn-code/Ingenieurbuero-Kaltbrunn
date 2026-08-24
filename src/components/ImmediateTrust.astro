@@ -506,20 +506,26 @@ const specialistQualifications = qualifications.filter(
     }
 
     .immediate-trust__facts {
+      grid-template-columns: 1fr;
       gap: 0.6rem;
     }
 
     .immediate-trust__fact {
-      min-height: 6.5rem;
+      display: grid;
+      min-height: 5.25rem;
+      align-items: center;
+      grid-template-columns: minmax(5.25rem, auto) minmax(0, 1fr);
+      column-gap: 1.25rem;
       padding: 1rem;
     }
 
     .immediate-trust__fact dd {
-      font-size: clamp(1.9rem, 10vw, 2.7rem);
+      font-size: clamp(2rem, 10vw, 2.5rem);
     }
 
     .immediate-trust__fact dt {
-      font-size: 0.69rem;
+      font-size: 0.78rem;
+      line-height: 1.3;
     }
   }
 

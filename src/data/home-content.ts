@@ -18,7 +18,7 @@ export const heroContent = {
   secondaryCta: {
     label: 'Referenzen ansehen',
     mobileLabel: 'Referenzen',
-    href: '/referenzen/',
+    href: '/#referenzen',
   },
 } as const;
 

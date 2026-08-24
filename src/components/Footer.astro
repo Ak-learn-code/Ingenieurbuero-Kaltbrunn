@@ -1,0 +1,485 @@
+---
+import { Image } from 'astro:assets';
+import logo from '@assets/brand/legacy/k.svg';
+import footerImage from '@assets/images/references/04-mercedes-e-front-links.webp';
+import { business } from '@data/business';
+import { legalNavigation, primaryNavigation } from '@data/navigation';
+
+const currentYear = new Date().getFullYear();
+const location = `${business.address.postalCode} ${business.address.city}`;
+---
+
+<footer class="site-footer" id="footer" data-site-footer>
+  <div class="site-footer__frame">
+    <div class="site-footer__media" aria-hidden="true">
+      <Image
+        src={footerImage}
+        alt=""
+        widths={[800, 1200, 1600]}
+        sizes="100vw"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+
+    <div class="site-footer__content container-wide">
+      <div class="site-footer__grid">
+        <div class="site-footer__brand-column">
+          <a
+            class="site-footer__brand"
+            href="/#hero"
+            aria-label={`${business.name} – zur Startseite`}
+          >
+            <img src={logo.src} alt="" width="43" height="41" />
+            <span>
+              <small>Ingenieurbüro</small>
+              <strong>Kaltbrunn</strong>
+            </span>
+          </a>
+
+          <p>{business.claim}</p>
+
+          <a class="site-footer__contact-link" href={business.phone.href}>
+            <span>Direkt anrufen</span>
+            <strong>{business.phone.display}</strong>
+          </a>
+        </div>
+
+        <nav class="site-footer__column" aria-label="Footer-Navigation">
+          <h2>Navigation</h2>
+          <ul>
+            {
+              primaryNavigation.map((item) => (
+                <li>
+                  <a href={item.href}>{item.label}</a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+
+        <div class="site-footer__column">
+          <h2>Kontakt</h2>
+          <address>
+            <a href={business.phone.href}>{business.phone.display}</a>
+            <a href={business.email.href}>{business.email.address}</a>
+          </address>
+        </div>
+
+        <div class="site-footer__column site-footer__office">
+          <div>
+            <h2>Büro</h2>
+            <address>
+              {business.address.street}<br />
+              {location}
+            </address>
+          </div>
+
+          <div>
+            <h2>Öffnungszeiten</h2>
+            <p>{business.openingHours.display}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="site-footer__bottom">
+        <p>© {currentYear} {business.name}</p>
+        <nav aria-label="Rechtliche Hinweise">
+          <ul>
+            {
+              legalNavigation.map((item) => (
+                <li>
+                  <a href={item.href}>{item.label}</a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
+
+      <p class="site-footer__signature" aria-hidden="true">KALTBRUNN</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const footer = document.querySelector<HTMLElement>('[data-site-footer]');
+
+  if (footer) {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) return;
+
+        footer.dataset.visible = 'true';
+        observer.disconnect();
+      },
+      { threshold: 0.12 },
+    );
+
+    observer.observe(footer);
+  }
+</script>
+
+<style>
+  .site-footer {
+    margin: 0 1rem 1rem;
+    color: var(--color-background);
+  }
+
+  .site-footer__frame {
+    position: relative;
+    min-height: clamp(40rem, 58vw, 48rem);
+    overflow: hidden;
+    border-radius: 1.75rem;
+    background: #171d29;
+    isolation: isolate;
+  }
+
+  .site-footer__media {
+    position: absolute;
+    z-index: -2;
+    right: 0;
+    bottom: -2%;
+    left: 0;
+    width: 100%;
+    height: 66%;
+    opacity: 0.08;
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgb(0 0 0 / 30%) 9%,
+      #000 24%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgb(0 0 0 / 30%) 9%,
+      #000 24%
+    );
+    transform: translate3d(0, 3rem, 0) scale(1.065);
+    transform-origin: 68% 100%;
+    transition:
+      opacity 800ms var(--motion-ease-standard),
+      transform 1400ms var(--motion-ease-emphasized);
+    will-change: opacity, transform;
+  }
+
+  .site-footer[data-visible='true'] .site-footer__media {
+    opacity: 0.38;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  .site-footer__media::after {
+    position: absolute;
+    inset: 0;
+    background: rgb(23 29 41 / 48%);
+    content: '';
+  }
+
+  .site-footer__media :global(picture),
+  .site-footer__media :global(img) {
+    width: 100%;
+    height: 100%;
+  }
+
+  .site-footer__media :global(img) {
+    object-fit: cover;
+    object-position: 69% 48%;
+    filter: grayscale(0.78) saturate(0.48) contrast(1.18) brightness(0.72);
+  }
+
+  .site-footer__content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    min-height: inherit;
+    flex-direction: column;
+    padding-block: clamp(5rem, 9vw, 8rem) 1.25rem;
+  }
+
+  .site-footer__grid {
+    display: grid;
+    grid-template-columns: minmax(16rem, 1.6fr) repeat(3, minmax(9rem, 0.7fr));
+    gap: clamp(2.5rem, 5vw, 5.5rem);
+  }
+
+  .site-footer__brand-column {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .site-footer__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: var(--color-background);
+    text-decoration: none;
+  }
+
+  .site-footer__brand img {
+    width: 2.7rem;
+    height: 2.55rem;
+    filter: brightness(0) invert(1);
+  }
+
+  .site-footer__brand span {
+    display: grid;
+    line-height: 1.02;
+  }
+
+  .site-footer__brand small {
+    font-size: 0.7rem;
+    font-weight: 590;
+    letter-spacing: 0.035em;
+  }
+
+  .site-footer__brand strong {
+    font-size: 1.3rem;
+    letter-spacing: -0.035em;
+  }
+
+  .site-footer__brand-column > p {
+    max-width: 27rem;
+    margin: 2.25rem 0 0;
+    color: rgb(255 255 255 / 58%);
+    font-size: 1rem;
+  }
+
+  .site-footer__contact-link {
+    display: grid;
+    gap: 0.15rem;
+    margin-top: 2.5rem;
+    color: var(--color-background);
+    text-decoration: none;
+  }
+
+  .site-footer__contact-link span {
+    color: rgb(255 255 255 / 55%);
+    font-size: 0.75rem;
+    font-weight: 650;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  .site-footer__contact-link strong {
+    font-size: clamp(1.2rem, 1.65vw, 1.6rem);
+    letter-spacing: -0.035em;
+  }
+
+  .site-footer__column h2 {
+    margin: 0 0 1.2rem;
+    color: var(--color-background);
+    font-size: 0.75rem;
+    font-weight: 720;
+    letter-spacing: 0.075em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .site-footer__column ul,
+  .site-footer__bottom ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-footer__column li + li {
+    margin-top: 0.48rem;
+  }
+
+  .site-footer__column a,
+  .site-footer__column address,
+  .site-footer__column p {
+    color: rgb(255 255 255 / 58%);
+    font-size: 0.91rem;
+    font-style: normal;
+    line-height: 1.6;
+  }
+
+  .site-footer__column a {
+    text-decoration: none;
+    transition: color var(--motion-duration-fast) var(--motion-ease-standard);
+  }
+
+  .site-footer__column a:hover,
+  .site-footer__bottom a:hover {
+    color: var(--color-background);
+  }
+
+  .site-footer__column address {
+    display: grid;
+    justify-items: start;
+  }
+
+  .site-footer__office {
+    display: grid;
+    align-content: start;
+    gap: 2.75rem;
+  }
+
+  .site-footer__office p {
+    margin: 0;
+  }
+
+  .site-footer__bottom {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-top: auto;
+    border-bottom: 1px solid rgb(255 255 255 / 13%);
+    padding-bottom: 1rem;
+    color: rgb(255 255 255 / 55%);
+    font-size: 0.82rem;
+  }
+
+  .site-footer__bottom p {
+    margin: 0;
+  }
+
+  .site-footer__bottom ul {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .site-footer__bottom a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--motion-duration-fast) var(--motion-ease-standard);
+  }
+
+  .site-footer__signature {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    overflow: hidden;
+    color: rgb(255 255 255 / 7%);
+    font-size: clamp(5.4rem, 13.3vw, 11rem);
+    font-weight: 720;
+    letter-spacing: -0.075em;
+    line-height: 0.78;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 64rem) {
+    .site-footer__frame {
+      min-height: 45rem;
+    }
+
+    .site-footer__grid {
+      grid-template-columns: minmax(16rem, 1.4fr) repeat(
+          2,
+          minmax(9rem, 0.75fr)
+        );
+    }
+
+    .site-footer__office {
+      grid-column: 2 / -1;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 48rem) {
+    .site-footer {
+      margin-inline: 0.5rem;
+    }
+
+    .site-footer__frame {
+      min-height: 52rem;
+      border-radius: 1rem;
+    }
+
+    .site-footer__content {
+      padding-block: 4rem 7.25rem;
+    }
+
+    .site-footer__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 2.75rem 1.5rem;
+    }
+
+    .site-footer__brand-column {
+      grid-column: 1 / -1;
+    }
+
+    .site-footer__brand-column > p {
+      margin-top: 1.5rem;
+    }
+
+    .site-footer__contact-link {
+      margin-top: 1.75rem;
+    }
+
+    .site-footer__office {
+      grid-column: 1 / -1;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+
+    .site-footer__media {
+      right: 0;
+      bottom: -1%;
+      left: 0;
+      width: 100%;
+      height: 38%;
+      -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgb(0 0 0 / 28%) 12%,
+        #000 30%
+      );
+      mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgb(0 0 0 / 28%) 12%,
+        #000 30%
+      );
+      transform: translate3d(0, 2rem, 0) scale(1.055);
+    }
+
+    .site-footer__media :global(img) {
+      object-position: 61% 48%;
+    }
+
+    .site-footer__bottom {
+      align-items: flex-start;
+      flex-direction: column;
+      padding-bottom: 0.85rem;
+    }
+
+    .site-footer__signature {
+      font-size: clamp(3.8rem, 20vw, 6.25rem);
+    }
+  }
+
+  @media (max-width: 24rem) {
+    .site-footer__frame {
+      min-height: 56rem;
+    }
+
+    .site-footer__grid,
+    .site-footer__office {
+      grid-template-columns: 1fr;
+    }
+
+    .site-footer__office {
+      gap: 2.25rem;
+    }
+
+    .site-footer__signature {
+      font-size: 3.45rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-footer__media,
+    .site-footer[data-visible='true'] .site-footer__media {
+      opacity: 0.38;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

@@ -1,0 +1,491 @@
+---
+import audiA5Full from '@assets/images/references/06-audi-a5-front.webp';
+import audiA5Small from '@assets/images/references/06-audi-a5-front-klein.webp';
+import audiA6Full from '@assets/images/references/07-audi-a6-heck-rechts.webp';
+import audiA6Small from '@assets/images/references/07-audi-a6-heck-rechts-klein.webp';
+import bmwDetailFull from '@assets/images/references/05-bmw-lack-detail.webp';
+import bmwDetailSmall from '@assets/images/references/05-bmw-lack-detail-klein.webp';
+import bmwX1Full from '@assets/images/references/01-bmw-x1-streifschaden.webp';
+import bmwX1Small from '@assets/images/references/01-bmw-x1-streifschaden-klein.webp';
+import mercedesFull from '@assets/images/references/04-mercedes-e-front-links.webp';
+import mercedesSmall from '@assets/images/references/04-mercedes-e-front-links-klein.webp';
+import toyotaDetailFull from '@assets/images/references/03-toyota-corolla-heck-detail.webp';
+import toyotaDetailSmall from '@assets/images/references/03-toyota-corolla-heck-detail-klein.webp';
+import toyotaLeftFull from '@assets/images/references/02-toyota-corolla-heck-links.webp';
+import toyotaLeftSmall from '@assets/images/references/02-toyota-corolla-heck-links-klein.webp';
+import { referencesContent } from '@data/references';
+import { Image } from 'astro:assets';
+
+const caseImages = [
+  { small: bmwX1Small, full: bmwX1Full },
+  { small: toyotaLeftSmall, full: toyotaLeftFull },
+  { small: toyotaDetailSmall, full: toyotaDetailFull },
+  { small: mercedesSmall, full: mercedesFull },
+  { small: bmwDetailSmall, full: bmwDetailFull },
+  { small: audiA5Small, full: audiA5Full },
+  { small: audiA6Small, full: audiA6Full },
+] as const;
+
+const referenceCases = referencesContent.cases.map((referenceCase, index) => ({
+  ...referenceCase,
+  ...caseImages[index]!,
+  alt: `${referenceCase.vehicle}, ${referenceCase.damage.toLowerCase()}, aufgenommen ${referenceCase.date}`,
+}));
+---
+
+<section
+  class="references"
+  id="referenzen"
+  aria-labelledby="references-heading"
+  data-references
+>
+  <header class="references__header container-wide">
+    <h2 id="references-heading">{referencesContent.heading}</h2>
+    <p>{referencesContent.introduction}</p>
+  </header>
+
+  <div
+    class="references__rail"
+    role="region"
+    aria-label="Referenzfälle"
+    tabindex="0"
+    data-references-rail
+  >
+    <div class="references__track">
+      {
+        referenceCases.map((referenceCase) => (
+          <figure class="reference-case">
+            <figcaption>
+              <p class="reference-case__vehicle">{referenceCase.vehicle}</p>
+              <h3>{referenceCase.damage}</h3>
+              <p>{referenceCase.description}</p>
+              <span>{referenceCase.date}</span>
+            </figcaption>
+
+            <a
+              class="reference-case__image"
+              href={referenceCase.full.src}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`${referenceCase.vehicle}: Bild vergrößern`}
+            >
+              <Image
+                src={referenceCase.small}
+                alt={referenceCase.alt}
+                width={referenceCase.small.width}
+                height={referenceCase.small.height}
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="reference-case__expand" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
+              </span>
+            </a>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="references__footer container-wide">
+    <div class="references__controls" aria-label="Referenzen durchblättern">
+      <button
+        type="button"
+        aria-label="Vorherige Referenzen anzeigen"
+        data-references-previous
+        disabled
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m14.5 5-7 7 7 7"></path>
+        </svg>
+      </button>
+      <button
+        type="button"
+        aria-label="Weitere Referenzen anzeigen"
+        data-references-next
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m9.5 5 7 7-7 7"></path>
+        </svg>
+      </button>
+    </div>
+
+    <aside class="references__note">
+      <h3>{referencesContent.evidenceNote.heading}</h3>
+      <div>
+        <p>{referencesContent.evidenceNote.text}</p>
+        <a href="#kontakt">Gutachten anfragen</a>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<script>
+  import { initializeReferencesRail } from '@scripts/references-rail';
+
+  initializeReferencesRail();
+</script>
+
+<style>
+  .references {
+    scroll-margin-top: calc(var(--header-height) + 2rem);
+    overflow: hidden;
+    padding-block: clamp(7rem, 11vw, 11rem);
+    background: var(--color-background);
+    color: var(--color-text);
+  }
+
+  .references__header {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(22rem, 0.72fr);
+    align-items: end;
+    gap: clamp(3rem, 8vw, 8rem);
+  }
+
+  .references__header h2 {
+    max-width: 11ch;
+    margin: 0;
+    color: var(--color-text);
+    font-size: var(--font-size-section-heading);
+    font-weight: 610;
+    letter-spacing: -0.065em;
+    line-height: 0.96;
+    text-wrap: balance;
+  }
+
+  .references__header > p {
+    max-width: 36rem;
+    margin: 0 0 0.35rem;
+    color: var(--color-text-muted);
+    font-size: clamp(1.05rem, 1.35vw, 1.3rem);
+    line-height: 1.58;
+  }
+
+  .references__rail {
+    width: 100%;
+    margin-top: clamp(5rem, 8vw, 8rem);
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    padding-inline: max(
+      var(--page-gutter),
+      calc((100vw - var(--container-wide)) / 2)
+    );
+    padding-bottom: 1rem;
+    scroll-padding-inline: max(
+      var(--page-gutter),
+      calc((100vw - var(--container-wide)) / 2)
+    );
+    scroll-snap-type: inline mandatory;
+    scrollbar-width: none;
+  }
+
+  .references__rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .references__track {
+    display: flex;
+    width: max-content;
+    gap: clamp(1rem, 1.6vw, 1.4rem);
+  }
+
+  .references__track::after {
+    width: max(var(--page-gutter), calc((100vw - var(--container-wide)) / 2));
+    flex: 0 0 auto;
+    content: '';
+  }
+
+  .reference-case {
+    display: flex;
+    width: clamp(27rem, 38vw, 31rem);
+    min-height: 42rem;
+    flex: 0 0 auto;
+    flex-direction: column;
+    overflow: hidden;
+    margin: 0;
+    border: 1px solid rgb(21 23 26 / 7%);
+    border-radius: var(--radius-large);
+    background: var(--color-surface-subtle);
+    box-shadow: 0 0.8rem 2.4rem rgb(19 32 55 / 5%);
+    scroll-snap-align: start;
+  }
+
+  .reference-case__image {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    height: 22rem;
+    margin-top: auto;
+    background: #dfe3e8;
+  }
+
+  .reference-case__image :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--motion-duration-slow)
+      var(--motion-ease-emphasized);
+  }
+
+  .reference-case__image:hover :global(img) {
+    transform: scale(1.025);
+  }
+
+  .reference-case__image:focus-visible {
+    z-index: 1;
+    outline: var(--focus-width) solid var(--color-focus);
+    outline-offset: calc(-1 * var(--focus-width));
+  }
+
+  .reference-case__expand {
+    position: absolute;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    display: grid;
+    width: 3rem;
+    height: 3rem;
+    place-items: center;
+    border: 1px solid rgb(255 255 255 / 55%);
+    border-radius: 50%;
+    background: rgb(255 255 255 / 90%);
+    color: var(--color-text);
+    transition:
+      background-color var(--motion-duration-fast) var(--motion-ease-standard),
+      color var(--motion-duration-fast) var(--motion-ease-standard),
+      transform var(--motion-duration-fast) var(--motion-ease-standard);
+  }
+
+  .reference-case__image:hover .reference-case__expand {
+    background: var(--color-brand);
+    color: var(--color-background);
+    transform: translateY(-1px);
+  }
+
+  .reference-case__expand svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-width: 1.8;
+  }
+
+  .reference-case figcaption {
+    padding: clamp(2rem, 3vw, 2.75rem);
+  }
+
+  .reference-case__vehicle {
+    margin: 0;
+    color: var(--color-brand);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.045em;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .reference-case h3 {
+    max-width: 15ch;
+    margin: 0.75rem 0 0;
+    color: var(--color-text);
+    font-size: clamp(1.6rem, 2.2vw, 2.1rem);
+    font-weight: 650;
+    letter-spacing: -0.055em;
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+
+  .reference-case figcaption > p:nth-of-type(2) {
+    margin: 1rem 0 0;
+    color: var(--color-text-muted);
+    font-size: 0.94rem;
+    line-height: 1.55;
+  }
+
+  .reference-case figcaption > span {
+    display: block;
+    margin-top: 1.25rem;
+    color: #7c828b;
+    font-size: var(--font-size-xs);
+    font-weight: 620;
+  }
+
+  .references__footer {
+    margin-top: 1.5rem;
+  }
+
+  .references__controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.6rem;
+  }
+
+  .references__controls button {
+    display: grid;
+    width: 3rem;
+    height: 3rem;
+    place-items: center;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-large);
+    background: var(--color-surface-subtle);
+    color: var(--color-text);
+    cursor: pointer;
+    transition:
+      border-color var(--motion-duration-fast) var(--motion-ease-standard),
+      background-color var(--motion-duration-fast) var(--motion-ease-standard),
+      color var(--motion-duration-fast) var(--motion-ease-standard),
+      transform var(--motion-duration-fast) var(--motion-ease-standard);
+  }
+
+  .references__controls button:hover:not(:disabled) {
+    border-color: var(--color-brand);
+    background: var(--color-brand);
+    color: var(--color-background);
+  }
+
+  .references__controls button:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+
+  .references__controls button:disabled {
+    color: #9ca2aa;
+    cursor: default;
+    opacity: 0.48;
+  }
+
+  .references__controls svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+  }
+
+  .references__note {
+    display: grid;
+    grid-template-columns: minmax(14rem, 0.6fr) minmax(0, 1.4fr);
+    gap: clamp(2.5rem, 8vw, 8rem);
+    margin-top: clamp(4.5rem, 8vw, 7rem);
+    border-top: 1px solid var(--color-border);
+    padding-top: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .references__note h3 {
+    margin: 0;
+    color: var(--color-text);
+    font-size: clamp(1.7rem, 2.6vw, 2.35rem);
+    font-weight: 630;
+    letter-spacing: -0.05em;
+    line-height: 1.05;
+  }
+
+  .references__note p {
+    max-width: 49rem;
+    margin: 0;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+  }
+
+  .references__note a {
+    display: inline-flex;
+    min-height: var(--button-height);
+    align-items: center;
+    justify-content: center;
+    margin-top: 1.5rem;
+    border: 1px solid var(--color-brand);
+    border-radius: var(--button-radius);
+    padding-inline: var(--button-padding-inline);
+    background: var(--color-brand);
+    color: var(--color-background);
+    font-size: var(--button-font-size);
+    font-weight: var(--button-font-weight);
+    text-decoration: none;
+  }
+
+  .references__note a:focus-visible {
+    outline: var(--focus-width) solid var(--color-focus);
+    outline-offset: var(--focus-offset);
+  }
+
+  @media (max-width: 56rem) {
+    .references__header {
+      display: block;
+    }
+
+    .references__header > p {
+      max-width: 43rem;
+      margin-top: 2.25rem;
+    }
+
+    .reference-case {
+      width: min(29rem, 62vw);
+    }
+
+    .references__note {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .references {
+      padding-block: 6.5rem;
+    }
+
+    .references__header > p {
+      margin-top: 1.75rem;
+      font-size: 1rem;
+    }
+
+    .references__rail {
+      margin-top: 4rem;
+    }
+
+    .reference-case {
+      width: min(22rem, 86vw);
+      min-height: 38.5rem;
+    }
+
+    .reference-case__image {
+      height: 17rem;
+    }
+
+    .reference-case figcaption {
+      padding: 1.75rem;
+    }
+
+    .reference-case h3 {
+      font-size: 1.7rem;
+    }
+
+    .references__footer {
+      margin-top: 1rem;
+    }
+
+    .references__controls button {
+      width: 2.75rem;
+      height: 2.75rem;
+    }
+
+    .references__note {
+      margin-top: 4rem;
+      padding-top: 2.5rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .references__rail {
+      scroll-behavior: auto;
+    }
+
+    .reference-case__image :global(img),
+    .reference-case__expand,
+    .references__controls button {
+      transition: none;
+    }
+  }
+</style>

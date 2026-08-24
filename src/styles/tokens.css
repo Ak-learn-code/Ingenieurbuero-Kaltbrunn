@@ -43,6 +43,7 @@
   --font-size-xl: 1.375rem;
   --font-size-2xl: 1.75rem;
   --font-size-3xl: clamp(2rem, 4vw, 3.75rem);
+  --font-size-section-heading: clamp(3rem, 4.2vw, 4rem);
 
   --line-height-tight: 1.08;
   --line-height-heading: 1.16;
@@ -88,4 +89,16 @@
   --motion-duration-slow: 520ms;
   --motion-ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
   --motion-ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (max-width: 56rem) {
+  :root {
+    --font-size-section-heading: clamp(2rem, 8vw, 3.75rem);
+  }
+}
+
+@media (max-width: 22rem) {
+  :root {
+    --font-size-section-heading: 1.9rem;
+  }
 }

@@ -1,0 +1,446 @@
+---
+import { Image } from 'astro:assets';
+import bodyMeasurement from '@assets/images/generated/cards/body-measurement.png';
+import commercialFleet from '@assets/images/generated/cards/commercial-fleet.png';
+import damageInspection from '@assets/images/generated/cards/damage-inspection.png';
+import documentationKit from '@assets/images/generated/cards/documentation-kit.png';
+import motorhomeCaravan from '@assets/images/generated/cards/motorhome-caravan.png';
+import technicalDiagnostics from '@assets/images/generated/cards/technical-diagnostics.png';
+import vehicleValue from '@assets/images/generated/cards/vehicle-value.png';
+import { services } from '@data/services';
+
+const serviceMedia = {
+  schadengutachten: {
+    src: damageInspection,
+    alt: 'Freigestellte Darstellung eines beschädigten Fahrzeugs mit Messlatte',
+  },
+  wertgutachten: {
+    src: vehicleValue,
+    alt: 'Freigestellte Darstellung eines hochwertigen Fahrzeugs',
+  },
+  'nutzfahrzeuge-fuhrpark': {
+    src: commercialFleet,
+    alt: 'Freigestellte Darstellung von Lkw, Transporter und Wohnmobil',
+  },
+  'pruefung-gegengutachten': {
+    src: documentationKit,
+    alt: 'Freigestellte Ausrüstung zur technischen Schadendokumentation',
+  },
+  'technische-analysen': {
+    src: technicalDiagnostics,
+    alt: 'Freigestellte Diagnosegeräte für die technische Fahrzeuganalyse',
+  },
+  karosserievermessung: {
+    src: bodyMeasurement,
+    alt: 'Freigestellte Darstellung einer Karosserie auf einem Messsystem',
+  },
+  'wohnmobil-wohnwagen': {
+    src: motorhomeCaravan,
+    alt: 'Freigestellte Darstellung eines Wohnmobils und Wohnwagens',
+  },
+} as const;
+---
+
+<section
+  class="services"
+  id="leistungen"
+  aria-labelledby="services-heading"
+  data-services
+>
+  <div class="services__header container-wide">
+    <div>
+      <h2 id="services-heading">
+        <span>Meine Leistungen.</span>{' '}
+        Von der Schadenaufnahme bis zur technischen Analyse.
+      </h2>
+      <p>
+        Von Heppenheim aus im Kreis Bergstraße sowie im Rhein-Main- und
+        Rhein-Neckar-Gebiet.
+      </p>
+    </div>
+
+    <div class="services__controls" aria-label="Leistungen durchblättern">
+      <button
+        type="button"
+        aria-label="Vorherige Leistungen anzeigen"
+        data-services-previous
+        disabled
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m14.5 5-7 7 7 7"></path>
+        </svg>
+      </button>
+      <button
+        type="button"
+        aria-label="Weitere Leistungen anzeigen"
+        data-services-next
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m9.5 5 7 7-7 7"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div
+    class="services__rail"
+    role="region"
+    aria-label="Alle Leistungen"
+    tabindex="0"
+    data-services-rail
+  >
+    <div class="services__track">
+      {
+        services.map((service) => (
+          <article
+            class="service-card"
+            id={`leistung-${service.id}`}
+            data-service-id={service.id}
+          >
+            <div class="service-card__copy">
+              <span class="service-card__line" aria-hidden="true" />
+              <h3>{service.title}</h3>
+              <p>{service.description}</p>
+            </div>
+
+            <div class="service-card__media">
+              <Image
+                src={serviceMedia[service.id].src}
+                alt={serviceMedia[service.id].alt}
+                widths={[320, 480, 640]}
+                sizes="(max-width: 40rem) 84vw, 24.5rem"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initializeServicesRail } from '@scripts/services-rail';
+
+  initializeServicesRail();
+</script>
+
+<style>
+  .services {
+    scroll-margin-top: calc(var(--header-height) + 2rem);
+    overflow: hidden;
+    padding-block: clamp(6.5rem, 10vw, 9.5rem);
+    background: var(--color-surface-subtle);
+    color: var(--color-text);
+  }
+
+  .services__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 3rem;
+  }
+
+  .services__header > div:first-child {
+    max-width: 66rem;
+  }
+
+  .services__header h2 {
+    margin: 0;
+    color: #7a8089;
+    font-size: clamp(2.35rem, 4vw, 3.9rem);
+    font-weight: 610;
+    letter-spacing: -0.06em;
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+
+  .services__header h2 span {
+    color: var(--color-text);
+  }
+
+  .services__header p {
+    max-width: 47rem;
+    margin: 1.5rem 0 0;
+    color: var(--color-text-muted);
+    font-size: clamp(1rem, 1.35vw, 1.2rem);
+    line-height: 1.55;
+  }
+
+  .services__controls {
+    display: flex;
+    flex: 0 0 auto;
+    gap: 0.6rem;
+  }
+
+  .services__controls button {
+    display: grid;
+    width: 3rem;
+    height: 3rem;
+    place-items: center;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-large);
+    background: var(--color-background);
+    color: var(--color-text);
+    cursor: pointer;
+    transition:
+      border-color var(--motion-duration-fast) var(--motion-ease-standard),
+      background-color var(--motion-duration-fast) var(--motion-ease-standard),
+      color var(--motion-duration-fast) var(--motion-ease-standard),
+      transform var(--motion-duration-fast) var(--motion-ease-standard);
+  }
+
+  .services__controls button:hover:not(:disabled) {
+    border-color: var(--color-brand);
+    background: var(--color-brand);
+    color: var(--color-background);
+  }
+
+  .services__controls button:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+
+  .services__controls button:disabled {
+    color: #9ca2aa;
+    cursor: default;
+    opacity: 0.48;
+  }
+
+  .services__controls svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+  }
+
+  .services__rail {
+    width: 100%;
+    margin-top: clamp(3rem, 5vw, 4.75rem);
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    padding-inline: max(
+      var(--page-gutter),
+      calc((100vw - var(--container-wide)) / 2)
+    );
+    padding-bottom: 1.5rem;
+    scroll-padding-inline: max(
+      var(--page-gutter),
+      calc((100vw - var(--container-wide)) / 2)
+    );
+    scroll-snap-type: inline mandatory;
+    scrollbar-width: none;
+  }
+
+  .services__rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .services__track {
+    display: flex;
+    width: max-content;
+    gap: clamp(1rem, 1.6vw, 1.4rem);
+  }
+
+  .services__track::after {
+    width: max(var(--page-gutter), calc((100vw - var(--container-wide)) / 2));
+    flex: 0 0 auto;
+    content: '';
+  }
+
+  .service-card {
+    position: relative;
+    display: flex;
+    width: clamp(20rem, 29vw, 24.5rem);
+    min-height: 34rem;
+    flex: 0 0 auto;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid rgb(21 23 26 / 7%);
+    border-radius: var(--radius-large);
+    background: var(--color-background);
+    box-shadow: 0 0.8rem 2.2rem rgb(19 32 55 / 5%);
+    scroll-snap-align: start;
+  }
+
+  .service-card__copy {
+    position: relative;
+    z-index: 1;
+    padding: clamp(2rem, 3vw, 2.75rem) clamp(2rem, 3vw, 2.75rem) 1rem;
+  }
+
+  .service-card__line {
+    display: block;
+    width: 2.2rem;
+    height: 3px;
+    margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
+    background: var(--color-brand);
+  }
+
+  .service-card h3 {
+    max-width: 13ch;
+    margin: 0;
+    color: var(--color-text);
+    font-size: clamp(1.5rem, 2vw, 1.9rem);
+    font-weight: 660;
+    letter-spacing: -0.055em;
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+
+  .service-card p {
+    margin: 1.15rem 0 0;
+    color: var(--color-text-muted);
+    font-size: clamp(0.94rem, 1.05vw, 1.02rem);
+    line-height: 1.58;
+  }
+
+  .service-card__media {
+    position: relative;
+    display: grid;
+    width: 100%;
+    height: 15.5rem;
+    margin-top: auto;
+    place-items: center;
+    padding: 0 0.8rem 0.5rem;
+  }
+
+  .service-card__media :global(picture) {
+    display: contents;
+  }
+
+  .service-card__media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center bottom;
+    filter: drop-shadow(0 1.1rem 1.3rem rgb(25 36 51 / 14%));
+    transform: translate3d(0, 0, 0) scale(1.01);
+    transform-origin: 50% 80%;
+    transition: transform 360ms var(--motion-ease-standard);
+  }
+
+  .service-card[data-service-id='pruefung-gegengutachten']
+    .service-card__media
+    :global(img),
+  .service-card[data-service-id='technische-analysen']
+    .service-card__media
+    :global(img),
+  .service-card[data-service-id='karosserievermessung']
+    .service-card__media
+    :global(img) {
+    transform: translate3d(0, 0.35rem, 0) scale(1.08);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .service-card:hover .service-card__media :global(img) {
+      transform: translate3d(0, -0.3rem, 0) scale(1.035);
+    }
+
+    .service-card[data-service-id='pruefung-gegengutachten']:hover
+      .service-card__media
+      :global(img),
+    .service-card[data-service-id='technische-analysen']:hover
+      .service-card__media
+      :global(img),
+    .service-card[data-service-id='karosserievermessung']:hover
+      .service-card__media
+      :global(img) {
+      transform: translate3d(0, 0, 0) scale(1.105);
+    }
+  }
+
+  @media (max-width: 56rem) {
+    .services__header {
+      align-items: flex-start;
+    }
+
+    .services__header h2 {
+      max-width: 14ch;
+    }
+
+    .services__controls {
+      padding-top: 0.3rem;
+    }
+
+    .service-card {
+      width: min(24rem, 74vw);
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .services {
+      padding-block: 5.5rem 5rem;
+    }
+
+    .services__header {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .services__header h2 {
+      max-width: 12ch;
+      font-size: clamp(2.15rem, 10.2vw, 3rem);
+      line-height: 1.02;
+    }
+
+    .services__header p {
+      margin-top: 1.25rem;
+      font-size: 0.98rem;
+    }
+
+    .services__controls button {
+      width: 2.75rem;
+      height: 2.75rem;
+    }
+
+    .services__rail {
+      margin-top: 2.5rem;
+      padding-bottom: 1rem;
+    }
+
+    .service-card {
+      width: min(20.5rem, 84vw);
+      min-height: 31.5rem;
+    }
+
+    .service-card__copy {
+      padding: 1.75rem 1.75rem 0.75rem;
+    }
+
+    .service-card__line {
+      margin-bottom: 2.75rem;
+    }
+
+    .service-card h3 {
+      font-size: 1.55rem;
+    }
+
+    .service-card p {
+      font-size: 0.94rem;
+    }
+
+    .service-card__media {
+      height: 13rem;
+      padding-inline: 0.35rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .services__rail {
+      scroll-behavior: auto;
+    }
+
+    .services__controls button {
+      transition: none;
+    }
+
+    .service-card__media :global(img) {
+      transition: none;
+    }
+  }
+</style>

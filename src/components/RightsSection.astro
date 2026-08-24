@@ -1,0 +1,278 @@
+---
+import { Image } from 'astro:assets';
+import rightsCostReimbursement from '@assets/images/generated/cards/rights-cost-reimbursement.png';
+import rightsHiddenDamage from '@assets/images/generated/cards/rights-hidden-damage.png';
+import rightsIndependentChoice from '@assets/images/generated/cards/rights-independent-choice.png';
+import { rightsContent } from '@data/home-content';
+
+const rightsMedia = [
+  {
+    src: rightsIndependentChoice,
+    alt: 'Fahrzeug, Schlüssel und Gutachtenunterlagen als Symbol der freien Gutachterwahl',
+  },
+  {
+    src: rightsCostReimbursement,
+    alt: 'Gutachtenunterlagen, Fahrzeugschlüssel und Kostenaufstellung',
+  },
+  {
+    src: rightsHiddenDamage,
+    alt: 'Geöffnete Fahrzeugkarosserie mit sichtbar gemachtem verdecktem Schaden',
+  },
+] as const;
+---
+
+<section class="rights" id="ihr-recht" aria-labelledby="rights-heading">
+  <div class="rights__inner container-wide">
+    <header class="rights__header">
+      <h2 id="rights-heading">{rightsContent.heading}</h2>
+      <p>{rightsContent.introduction}</p>
+    </header>
+
+    <div class="rights__points" aria-label="Ihre Rechte im Überblick">
+      {
+        rightsContent.items.map((item, index) => (
+          <article class="rights__point">
+            <div class="rights__point-media">
+              <Image
+                src={rightsMedia[index]!.src}
+                alt={rightsMedia[index]!.alt}
+                widths={[360, 560, 720]}
+                sizes="(max-width: 56rem) calc(100vw - 4rem), 27rem"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+
+            <div class="rights__point-copy">
+              <p class="rights__number" aria-hidden="true">
+                {String(index + 1).padStart(2, '0')}
+              </p>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .rights {
+    position: relative;
+    overflow: clip;
+    scroll-margin-top: calc(var(--header-height) + 2rem);
+    margin: 0 1rem 1rem;
+    padding-block: clamp(7rem, 11vw, 11rem) clamp(9rem, 13vw, 13rem);
+    border-radius: 1.75rem;
+    background: #171d29;
+    color: var(--color-background);
+  }
+
+  .rights__header {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(22rem, 0.72fr);
+    align-items: end;
+    gap: clamp(3rem, 8vw, 8rem);
+  }
+
+  .rights__header h2 {
+    max-width: 12ch;
+    margin: 0;
+    color: var(--color-background);
+    font-size: var(--font-size-section-heading);
+    font-weight: 610;
+    letter-spacing: -0.065em;
+    line-height: 0.92;
+    text-wrap: balance;
+  }
+
+  .rights__header > p {
+    max-width: 36rem;
+    margin: 0 0 0.35rem;
+    color: rgb(255 255 255 / 68%);
+    font-size: clamp(1.05rem, 1.35vw, 1.3rem);
+    line-height: 1.58;
+  }
+
+  .rights__points {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 2vw, 1.5rem);
+    margin-top: clamp(5rem, 8vw, 8rem);
+  }
+
+  .rights__point {
+    display: flex;
+    min-height: clamp(32rem, 38vw, 35rem);
+    flex-direction: column;
+    overflow: hidden;
+    padding: clamp(1.6rem, 2.7vw, 2.4rem);
+    border: 1px solid rgb(255 255 255 / 12%);
+    border-radius: var(--radius-large);
+    background: rgb(255 255 255 / 5%);
+    box-shadow: 0 1.4rem 2.4rem rgb(0 0 0 / 18%);
+  }
+
+  .rights__point-media {
+    display: grid;
+    width: calc(100% + clamp(1.4rem, 2.2vw, 2rem));
+    height: clamp(13rem, 17vw, 15rem);
+    margin: calc(clamp(0.7rem, 1.1vw, 1rem) * -1)
+      calc(clamp(0.7rem, 1.1vw, 1rem) * -1) clamp(1.5rem, 2vw, 2rem);
+    place-items: center;
+  }
+
+  .rights__point-media :global(picture) {
+    display: contents;
+  }
+
+  .rights__point-media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    filter: drop-shadow(0 1.25rem 1.5rem rgb(0 0 0 / 24%));
+    transform: translate3d(0, 0, 0) scale(1.035);
+    transform-origin: center;
+    transition: transform 360ms var(--motion-ease-standard);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .rights__point:hover .rights__point-media :global(img) {
+      transform: translate3d(0, -0.25rem, 0) scale(1.06);
+    }
+  }
+
+  .rights__point-copy {
+    position: relative;
+    margin-top: auto;
+    padding-left: 1.15rem;
+  }
+
+  .rights__point-copy::before {
+    position: absolute;
+    top: 0.1rem;
+    bottom: 0.1rem;
+    left: 0;
+    width: 3px;
+    background: var(--color-brand);
+    content: '';
+  }
+
+  .rights__number {
+    margin: 0 0 1rem;
+    color: var(--color-brand);
+    font-size: var(--font-size-xs);
+    font-weight: 760;
+    letter-spacing: 0.12em;
+    line-height: 1;
+  }
+
+  .rights__point h3 {
+    margin: 0;
+    color: var(--color-background);
+    font-size: clamp(1.2rem, 1.7vw, 1.55rem);
+    font-weight: 720;
+    letter-spacing: -0.035em;
+    line-height: 1.08;
+  }
+
+  .rights__point h3 + p {
+    margin: 1.05rem 0 0;
+    color: rgb(255 255 255 / 66%);
+    font-size: clamp(0.96rem, 1.08vw, 1.08rem);
+    line-height: 1.56;
+  }
+
+  @media (max-width: 56rem) {
+    .rights {
+      margin-inline: 0.5rem;
+      border-radius: 1rem;
+    }
+
+    .rights__header {
+      display: block;
+    }
+
+    .rights__header h2 {
+      max-width: 11ch;
+    }
+
+    .rights__header > p {
+      max-width: 43rem;
+      margin-top: 2.25rem;
+    }
+
+    .rights__points {
+      grid-template-columns: 1fr;
+      margin-top: clamp(4.5rem, 11vw, 6rem);
+    }
+
+    .rights__point {
+      min-height: 28rem;
+    }
+
+    .rights__point-media {
+      height: 13rem;
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .rights {
+      padding-top: 6.5rem;
+      padding-bottom: 10rem;
+    }
+
+    .rights__header h2 {
+      letter-spacing: -0.06em;
+    }
+
+    .rights__header > p {
+      margin-top: 1.75rem;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .rights__points {
+      gap: 1rem;
+      margin-top: 4rem;
+    }
+
+    .rights__point {
+      min-height: 25rem;
+      padding: 1.5rem;
+      border-radius: var(--radius-large);
+      box-shadow: 0 1rem 1.8rem rgb(0 0 0 / 16%);
+    }
+
+    .rights__point-media {
+      width: calc(100% + 1.25rem);
+      height: 10.5rem;
+      margin: -0.65rem -0.65rem 1.25rem;
+    }
+
+    .rights__point h3 {
+      font-size: 1.25rem;
+    }
+
+    .rights__point h3 + p {
+      font-size: 0.95rem;
+    }
+  }
+
+  @media (max-width: 24rem) {
+    .rights__header h2 {
+    }
+
+    .rights__point {
+      min-height: 26rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rights__point-media :global(img) {
+      transition: none;
+    }
+  }
+</style>

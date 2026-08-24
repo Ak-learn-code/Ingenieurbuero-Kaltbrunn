@@ -172,34 +172,60 @@ import { heroContactContent } from '@data/home-content';
   @media (max-width: 40rem) {
     .hero-contact {
       right: 0.5rem;
-      bottom: 0.5rem;
-      width: min(19.5rem, calc(100vw - 1rem));
+      bottom: max(0.5rem, env(safe-area-inset-bottom));
+      width: min(20.75rem, calc(100vw - 1rem));
+    }
+
+    .hero-contact__link {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 3.25rem;
     }
 
     .hero-contact__identity {
-      grid-template-columns: 2.75rem minmax(0, 1fr);
-      gap: 0.6rem;
-      padding: 0.6rem;
+      grid-template-columns: 2.35rem minmax(0, 1fr);
+      gap: 0.5rem;
+      padding: 0.45rem 0.55rem;
     }
 
     .hero-contact__identity img {
-      width: 2.75rem;
-      height: 2.75rem;
+      width: 2.35rem;
+      height: 2.35rem;
     }
 
     .hero-contact__details strong {
-      font-size: 0.875rem;
+      overflow: hidden;
+      font-size: 0.8rem;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
-    .hero-contact__details span,
+    .hero-contact__details span {
+      display: none;
+    }
+
     .hero-contact__details small {
-      font-size: 0.5875rem;
+      margin-top: 0.15rem;
+      overflow: hidden;
+      font-size: 0.5625rem;
+      line-height: 1.2;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .hero-contact__action {
-      min-height: 2.5rem;
-      padding: 0.45rem 0.65rem;
-      font-size: 0.7rem;
+      min-height: 3.25rem;
+      border-top: 0;
+      border-left: 1px solid rgba(255, 255, 255, 0.16);
+      padding: 0;
+    }
+
+    .hero-contact__action span {
+      display: none;
+    }
+
+    .hero-contact__action svg {
+      width: 1.25rem;
+      height: 1.25rem;
     }
   }
 

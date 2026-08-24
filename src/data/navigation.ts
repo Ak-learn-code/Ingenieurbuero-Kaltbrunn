@@ -2,10 +2,9 @@ import type { NavigationItem } from './types';
 
 export const primaryNavigation = [
   { label: 'Leistungen', href: '/#leistungen' },
-  { label: 'Über mich', href: '/#ueber-mich' },
-  { label: 'Referenzen', href: '/referenzen/' },
-  { label: 'Warum ich', href: '/#warum-ich' },
+  { label: 'Warum ich?', href: '/#warum-ich' },
   { label: 'Ihr Recht', href: '/#ihr-recht' },
+  { label: 'Referenzen', href: '/#referenzen' },
   { label: 'Kontakt', href: '/#kontakt' },
 ] as const satisfies readonly NavigationItem[];
 

@@ -2,6 +2,18 @@
 import heroImage from '@assets/images/hero/audi-front-vermessung.png';
 import { heroContent } from '@data/home-content';
 import HeroContact from './HeroContact.astro';
+
+const heroHeadingWords = heroContent.heading.split(' ');
+const heroHeadingSegments = heroHeadingWords.flatMap((word, wordIndex) => {
+  const hyphenSegments = word.match(/[^-]+-?/g) ?? [word];
+
+  return hyphenSegments.map((text, segmentIndex) => ({
+    text,
+    spaceAfter:
+      segmentIndex === hyphenSegments.length - 1 &&
+      wordIndex < heroHeadingWords.length - 1,
+  }));
+});
 ---
 
 <section class="hero" id="hero" aria-labelledby="hero-heading">
@@ -33,7 +45,23 @@ import HeroContact from './HeroContact.astro';
         <span class="hero__review-label">{heroContent.reviewProof.label}</span>
       </div>
 
-      <h1 id="hero-heading">{heroContent.heading}</h1>
+      <h1 id="hero-heading" aria-label={heroContent.heading}>
+        {
+          heroHeadingSegments.map(({ text, spaceAfter }, index) => (
+            <>
+              <span class="hero__heading-word-clip" aria-hidden="true">
+                <span
+                  class="hero__heading-word"
+                  style={`--hero-word-index: ${index}`}
+                >
+                  {text}
+                </span>
+              </span>
+              {spaceAfter && ' '}
+            </>
+          ))
+        }
+      </h1>
       <p>{heroContent.subheading}</p>
 
       <div class="hero__actions" aria-label="Direkteinstiege">
@@ -125,6 +153,20 @@ import HeroContact from './HeroContact.astro';
     letter-spacing: -0.052em;
     line-height: 0.96;
     text-wrap: pretty;
+  }
+
+  .hero__heading-word-clip {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+  }
+
+  .hero__heading-word {
+    display: inline-block;
+    animation: hero-heading-word-enter 680ms var(--motion-ease-emphasized) both;
+    animation-delay: calc(140ms + (var(--hero-word-index) * 52ms));
+    transform: translate3d(0, 112%, 0);
+    will-change: transform;
   }
 
   .hero__copy > p {
@@ -296,6 +338,16 @@ import HeroContact from './HeroContact.astro';
     }
   }
 
+  @keyframes hero-heading-word-enter {
+    from {
+      transform: translate3d(0, 112%, 0);
+    }
+
+    to {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
   @keyframes hero-image-settle {
     from {
       transform: scale(1.055);
@@ -427,9 +479,14 @@ import HeroContact from './HeroContact.astro';
   @media (prefers-reduced-motion: reduce) {
     .hero__copy,
     .hero__media,
-    .hero__media img {
+    .hero__media img,
+    .hero__heading-word {
       animation: none;
       transform: none;
+    }
+
+    .hero__heading-word {
+      will-change: auto;
     }
 
     .hero__primary-action,

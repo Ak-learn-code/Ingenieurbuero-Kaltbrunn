@@ -1,0 +1,257 @@
+---
+import accidentImage from '@assets/images/generated/story/01-unfallschaden.png';
+import documentationImage from '@assets/images/generated/story/02-schadendokumentation.png';
+import inspectionImage from '@assets/images/generated/story/04-nurettin-begutachtung.png';
+import { processContent } from '@data/process';
+import { Image } from 'astro:assets';
+
+const images = [accidentImage, documentationImage, inspectionImage] as const;
+const imageAlts = [
+  'Unfallschaden an der Front eines Fahrzeugs',
+  'Fotografische Dokumentation eines Fahrzeugschadens mit Maßstab',
+  'Nurettin Sogukcesme bei der Begutachtung eines Fahrzeugschadens',
+] as const;
+
+const processSteps = processContent.steps.map((step, index) => ({
+  ...step,
+  image: images[index]!,
+  imageAlt: imageAlts[index]!,
+}));
+---
+
+<section
+  class="process-steps"
+  id="leistungen"
+  aria-labelledby="process-steps-heading"
+>
+  <div class="process-steps__inner container-wide">
+    <header class="process-steps__header">
+      <p>{processContent.eyebrow}</p>
+      <h2 id="process-steps-heading">{processContent.heading}</h2>
+    </header>
+
+    <ol class="process-steps__grid">
+      {
+        processSteps.map((step) => (
+          <li>
+            <article class="process-step">
+              <div class="process-step__media">
+                <Image
+                  src={step.image}
+                  alt={step.imageAlt}
+                  width={step.image.width}
+                  height={step.image.height}
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span aria-hidden="true">{step.number}</span>
+              </div>
+
+              <div class="process-step__content">
+                <h3>{step.title}</h3>
+                <p>{step.description}</p>
+              </div>
+            </article>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .process-steps {
+    scroll-margin-top: calc(var(--header-height) + 2rem);
+    padding-block: clamp(6rem, 10vw, 9rem);
+    background: var(--color-background);
+    color: var(--color-text);
+  }
+
+  .process-steps__header {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .process-steps__header > p {
+    margin: 0;
+    color: var(--color-brand);
+    font-size: 0.9rem;
+    font-weight: 690;
+    letter-spacing: 0.06em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .process-steps__header h2 {
+    max-width: 100%;
+    margin: 1.35rem 0 0;
+    color: var(--color-text);
+    font-size: var(--font-size-section-heading);
+    font-weight: 610;
+    letter-spacing: -0.06em;
+    line-height: 0.96;
+    text-wrap: balance;
+  }
+
+  .process-steps__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 2vw, 1.75rem);
+    margin: clamp(3.75rem, 6vw, 5.5rem) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .process-steps__grid > li {
+    min-width: 0;
+  }
+
+  .process-step {
+    overflow: hidden;
+    height: 100%;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-large);
+    background: var(--color-surface-subtle);
+  }
+
+  .process-step__media {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1.55;
+    background: #dfe3e8;
+  }
+
+  .process-step__media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .process-step__media span {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    display: grid;
+    width: 3.25rem;
+    height: 3.25rem;
+    place-items: center;
+    border: 1px solid rgb(255 255 255 / 30%);
+    border-radius: 50%;
+    background: var(--color-brand);
+    color: #fff;
+    font-size: 1.35rem;
+    font-weight: 720;
+    line-height: 1;
+  }
+
+  .process-step__content {
+    padding: clamp(1.5rem, 2.2vw, 2rem);
+    text-align: center;
+  }
+
+  .process-step__content h3 {
+    margin: 0;
+    color: var(--color-text);
+    font-size: clamp(1.2rem, 1.8vw, 1.55rem);
+    font-weight: 670;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+
+  .process-step__content p {
+    max-width: 34rem;
+    margin: 0.85rem auto 0;
+    color: var(--color-text-muted);
+    font-size: clamp(0.93rem, 1.12vw, 1.05rem);
+    line-height: 1.55;
+  }
+
+  @media (max-width: 56rem) {
+    .process-steps__grid {
+      grid-template-columns: 1fr;
+      max-width: 42rem;
+      margin-inline: auto;
+    }
+
+    .process-step {
+      display: grid;
+      grid-template-columns: minmax(13rem, 0.9fr) minmax(0, 1.1fr);
+    }
+
+    .process-step__media {
+      height: 100%;
+      min-height: 16rem;
+      aspect-ratio: auto;
+    }
+
+    .process-step__content {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    .process-step__content p {
+      margin-inline: 0;
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .process-steps {
+      padding-block: clamp(5rem, 18vw, 7rem);
+    }
+
+    .process-steps__header {
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    .process-steps__header h2 {
+      max-width: 12ch;
+      margin-top: 1rem;
+      line-height: 1;
+    }
+
+    .process-steps__grid {
+      gap: 1rem;
+      margin-top: 3rem;
+    }
+
+    .process-step {
+      display: block;
+    }
+
+    .process-step__media {
+      width: 100%;
+      height: auto;
+      min-height: 0;
+      aspect-ratio: 1.55;
+    }
+
+    .process-step__media span {
+      top: 0.75rem;
+      left: 0.75rem;
+      width: 2.75rem;
+      height: 2.75rem;
+      font-size: 1.1rem;
+    }
+
+    .process-step__content {
+      padding: 1.35rem;
+      text-align: left;
+    }
+
+    .process-step__content h3 {
+      font-size: 1.25rem;
+    }
+
+    .process-step__content p {
+      margin-top: 0.65rem;
+      font-size: 0.93rem;
+    }
+  }
+</style>

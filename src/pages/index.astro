@@ -1,6 +1,12 @@
 ---
 import Header from '@components/Header.astro';
 import Hero from '@components/Hero.astro';
+import ServicesSection from '@components/ServicesSection.astro';
+import ImmediateTrust from '@components/ImmediateTrust.astro';
+import RightsSection from '@components/RightsSection.astro';
+import ReferencesSection from '@components/ReferencesSection.astro';
+import ContactSection from '@components/ContactSection.astro';
+import Footer from '@components/Footer.astro';
 import { seo } from '@data/seo';
 import BaseLayout from '@layouts/BaseLayout.astro';
 
@@ -13,5 +19,11 @@ const description = seo.defaultDescription;
   <Header />
   <main id="main-content">
     <Hero />
+    <ServicesSection />
+    <ImmediateTrust />
+    <RightsSection />
+    <ReferencesSection />
+    <ContactSection />
   </main>
+  <Footer />
 </BaseLayout>

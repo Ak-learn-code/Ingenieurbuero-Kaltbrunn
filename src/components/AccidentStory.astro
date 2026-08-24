@@ -1,0 +1,337 @@
+---
+import damageScene from '@assets/images/generated/story/01-unfallschaden.png';
+import damageDocumentation from '@assets/images/generated/story/02-schadendokumentation.png';
+import evidenceInspection from '@assets/images/generated/story/03-beweissicherung.png';
+import nurettinInspection from '@assets/images/generated/story/04-nurettin-begutachtung.png';
+import { accidentStory } from '@data/home-content';
+import { Image } from 'astro:assets';
+
+const storyFrames = [
+  {
+    image: damageScene,
+    alt: 'Symbolische Darstellung eines Unfallschadens an einem Fahrzeug',
+  },
+  {
+    image: damageDocumentation,
+    alt: 'Symbolische Darstellung einer fotografischen Schadendokumentation mit Maßstab',
+  },
+  {
+    image: evidenceInspection,
+    alt: 'Symbolische Darstellung einer technischen Lack- und Oberflächenprüfung',
+  },
+  {
+    image: nurettinInspection,
+    alt: 'Nurettin Sogukcesme bei der fotografischen Begutachtung eines Fahrzeugschadens',
+  },
+] as const;
+
+const storyChapters = accidentStory.statements.map((statement, index) => ({
+  statement,
+  frame: storyFrames[index]!,
+}));
+---
+
+<section
+  class="accident-story"
+  aria-labelledby="accident-story-heading"
+  data-accident-story
+>
+  <header class="accident-story__header container-wide">
+    <h2 id="accident-story-heading">{accidentStory.title}</h2>
+  </header>
+
+  <div class="accident-story__sequence container-wide">
+    <div class="accident-story__media" aria-hidden="true">
+      <div class="accident-story__media-frame">
+        {
+          storyFrames.map((frame, index) => (
+            <Image
+              src={frame.image}
+              alt=""
+              format="webp"
+              quality={82}
+              loading="lazy"
+              decoding="async"
+              data-story-image
+              data-active={index === 0 ? 'true' : 'false'}
+            />
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="accident-story__chapters">
+      {
+        storyChapters.map(({ statement, frame }, index) => (
+          <article
+            class="accident-story__chapter"
+            data-story-chapter
+            data-active={index === 0 ? 'true' : 'false'}
+          >
+            <Image
+              class="accident-story__mobile-image"
+              src={frame.image}
+              alt={frame.alt}
+              format="webp"
+              quality={82}
+              loading="lazy"
+              decoding="async"
+            />
+            <p>{statement}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="accident-story__conclusion">
+    <p class="container-wide">{accidentStory.conclusion}</p>
+  </div>
+</section>
+
+<script>
+  import { initializeAccidentStory } from '@scripts/accident-story';
+
+  initializeAccidentStory();
+</script>
+
+<style>
+  .accident-story {
+    position: relative;
+    overflow: clip;
+    margin: 0 1rem 1rem;
+    border-radius: 1.75rem;
+    background: #171d29;
+    color: var(--color-background);
+  }
+
+  .accident-story__header {
+    padding-top: clamp(6.5rem, 10vw, 10rem);
+    padding-bottom: clamp(5rem, 8vw, 8rem);
+  }
+
+  .accident-story__header h2 {
+    max-width: 14ch;
+    margin: 0;
+    font-size: var(--font-size-section-heading);
+    font-weight: 610;
+    letter-spacing: -0.065em;
+    line-height: 0.92;
+    text-wrap: balance;
+  }
+
+  .accident-story__sequence {
+    display: grid;
+    align-items: start;
+    grid-template-columns: minmax(0, 1.08fr) minmax(22rem, 0.72fr);
+    gap: clamp(4rem, 8vw, 8rem);
+    padding-bottom: clamp(6rem, 10vw, 10rem);
+  }
+
+  .accident-story__media {
+    position: sticky;
+    top: clamp(7rem, 11vh, 9rem);
+    aspect-ratio: 3 / 2;
+  }
+
+  .accident-story__media-frame {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: var(--radius-large);
+    background: #0d111a;
+  }
+
+  .accident-story__media-frame::after {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 20, 53, 0.12);
+    content: '';
+    pointer-events: none;
+  }
+
+  .accident-story__media-frame img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    object-fit: cover;
+    object-position: center;
+    transform: scale(1.035);
+    transition:
+      opacity 520ms var(--motion-ease-standard),
+      transform 900ms var(--motion-ease-emphasized);
+  }
+
+  .accident-story__media-frame img[data-active='true'] {
+    z-index: 1;
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .accident-story__chapters {
+    margin-top: -11vh;
+  }
+
+  .accident-story__chapter {
+    display: flex;
+    min-height: 72vh;
+    align-items: center;
+    opacity: 0.28;
+    transition:
+      opacity 360ms var(--motion-ease-standard),
+      transform 520ms var(--motion-ease-emphasized);
+    transform: translateY(1.5rem);
+  }
+
+  .accident-story__chapter[data-active='true'] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .accident-story__chapter p {
+    max-width: 14ch;
+    margin: 0;
+    font-size: clamp(2.2rem, 4vw, 4.65rem);
+    font-weight: 590;
+    letter-spacing: -0.055em;
+    line-height: 0.98;
+    text-wrap: balance;
+  }
+
+  .accident-story__mobile-image {
+    display: none;
+  }
+
+  .accident-story__conclusion {
+    display: flex;
+    min-height: min(58svh, 36rem);
+    align-items: center;
+    background: var(--color-brand);
+  }
+
+  .accident-story__conclusion p {
+    max-width: 20ch;
+    margin-block: 0;
+    padding-block: clamp(5rem, 10vw, 9rem);
+    font-size: clamp(2.75rem, 6.4vw, 6.5rem);
+    font-weight: 620;
+    letter-spacing: -0.065em;
+    line-height: 0.93;
+    text-wrap: balance;
+  }
+
+  @media (max-width: 56rem) {
+    .accident-story {
+      margin-inline: 0.5rem;
+      border-radius: 1rem;
+    }
+
+    .accident-story__header {
+      padding-top: clamp(5.5rem, 17vw, 8rem);
+      padding-bottom: clamp(4rem, 13vw, 6rem);
+    }
+
+    .accident-story__header h2 {
+      max-width: 12ch;
+    }
+
+    .accident-story__sequence {
+      display: block;
+      padding-bottom: clamp(5rem, 15vw, 7rem);
+    }
+
+    .accident-story__media {
+      display: none;
+    }
+
+    .accident-story__chapters {
+      display: grid;
+      gap: clamp(3.75rem, 13vw, 5.5rem);
+      margin-top: 0;
+    }
+
+    .accident-story__chapter {
+      display: grid;
+      min-height: 0;
+      gap: clamp(1.75rem, 6vw, 2.5rem);
+      opacity: 1;
+      transform: none;
+    }
+
+    .accident-story__chapter p {
+      max-width: 13ch;
+      font-size: clamp(2rem, 8.8vw, 3.5rem);
+    }
+
+    .accident-story__mobile-image {
+      display: block;
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      border-radius: var(--radius-large);
+      object-fit: cover;
+    }
+
+    .accident-story__conclusion {
+      min-height: 0;
+    }
+
+    .accident-story__conclusion p {
+      padding-top: 4.5rem;
+      padding-bottom: 10rem;
+      font-size: clamp(2.4rem, 10vw, 4.25rem);
+    }
+  }
+
+  @media (max-width: 24rem) {
+    .accident-story__header h2 {
+    }
+
+    .accident-story__chapter p {
+      font-size: clamp(1.9rem, 9vw, 2.5rem);
+    }
+
+    .accident-story__conclusion p {
+      font-size: clamp(2.35rem, 11vw, 3.2rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .accident-story__sequence {
+      display: block;
+    }
+
+    .accident-story__media {
+      display: none;
+    }
+
+    .accident-story__chapters {
+      display: grid;
+      gap: clamp(5rem, 12vw, 9rem);
+      margin-top: 0;
+    }
+
+    .accident-story__chapter {
+      display: grid;
+      min-height: 0;
+      gap: clamp(1.75rem, 4vw, 3rem);
+      opacity: 1;
+    }
+
+    .accident-story__mobile-image {
+      display: block;
+      width: min(100%, 55rem);
+      aspect-ratio: 3 / 2;
+      border-radius: var(--radius-large);
+      object-fit: cover;
+    }
+
+    .accident-story__media-frame img,
+    .accident-story__chapter {
+      transition: none;
+      transform: none;
+    }
+  }
+</style>

@@ -16,7 +16,7 @@ Telefon: [+49 176 37998836](tel:+4917637998836)
 
 ## 2. Kontaktformular
 
-Wenn Sie uns über das Kontaktformular eine Anfrage zukommen lassen, werden Ihre Angaben (Name, E-Mail, Telefon, Nachricht) zur Bearbeitung Ihrer Anfrage sowie für Rückfragen bei uns gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Anfrage) bzw. Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Bearbeitung Ihrer Anfrage). Die Daten werden nach abschließender Bearbeitung Ihrer Anfrage gelöscht, sofern keine gesetzlichen Aufbewahrungspflichten entgegenstehen.
+Wenn Sie uns über das Kontaktformular eine Anfrage zukommen lassen, werden Ihre Angaben (Name, E-Mail-Adresse, Telefonnummer, Nachricht sowie optional Kennzeichen beziehungsweise Fahrzeug) verschlüsselt an den bei ALL-INKL.COM betriebenen Webserver übertragen und von dort per E-Mail an uns weitergeleitet. Ein externer Formulardienst wird dafür nicht eingesetzt. Wir verarbeiten und speichern die Angaben zur Bearbeitung Ihrer Anfrage sowie für mögliche Rückfragen. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Anfrage) beziehungsweise Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Bearbeitung Ihrer Anfrage). Die Daten werden nach abschließender Bearbeitung Ihrer Anfrage gelöscht, sofern keine gesetzlichen Aufbewahrungspflichten entgegenstehen.
 
 ## 3. Kontaktaufnahme per Telefon, E-Mail oder WhatsApp
 

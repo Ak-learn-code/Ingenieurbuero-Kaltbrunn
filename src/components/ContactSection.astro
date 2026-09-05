@@ -3,6 +3,7 @@ import { business } from '@data/business';
 import { contactContent } from '@data/home-content';
 
 const privacyHref = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/datenschutz/`;
+const contactEndpoint = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/api/contact.php`;
 ---
 
 <section class="contact" id="kontakt" aria-labelledby="contact-heading">
@@ -43,7 +44,30 @@ const privacyHref = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/datenschutz/
     <div class="contact__form-area">
       <h3>{contactContent.formHeading}</h3>
 
-      <form class="contact-form" data-contact-form>
+      <form
+        class="contact-form"
+        action={contactEndpoint}
+        method="post"
+        data-contact-form
+      >
+        <div class="contact-form__honeypot" aria-hidden="true">
+          <label for="k-website">Website</label>
+          <input
+            id="k-website"
+            name="website"
+            type="text"
+            tabindex="-1"
+            autocomplete="off"
+          />
+        </div>
+
+        <input
+          name="form_started_at"
+          type="hidden"
+          value=""
+          data-form-started-at
+        />
+
         <div class="contact-form__field">
           <label for="k-name">Name</label>
           <input
@@ -52,6 +76,7 @@ const privacyHref = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/datenschutz/
             type="text"
             placeholder="Max Mustermann"
             autocomplete="name"
+            maxlength="120"
             required
           />
         </div>
@@ -64,6 +89,7 @@ const privacyHref = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/datenschutz/
             type="tel"
             placeholder="+49 176 1234567"
             autocomplete="tel"
+            maxlength="60"
             required
           />
         </div>
@@ -76,6 +102,7 @@ const privacyHref = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/datenschutz/
             type="email"
             placeholder="max@beispiel.de"
             autocomplete="email"
+            maxlength="190"
             required
           />
         </div>
@@ -89,6 +116,7 @@ const privacyHref = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/datenschutz/
             name="vehicle"
             type="text"
             placeholder="z. B. HP-XX 123 · BMW X1"
+            maxlength="160"
           />
         </div>
 
@@ -98,11 +126,12 @@ const privacyHref = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/datenschutz/
             id="k-nachricht"
             name="message"
             placeholder="Was ist passiert? Fahrzeug, Schaden, Wunschtermin – ein paar Sätze genügen."
+            maxlength="5000"
             required></textarea>
         </div>
 
         <label class="contact-form__consent">
-          <input name="consent" type="checkbox" required />
+          <input name="consent" type="checkbox" value="accepted" required />
           <span>
             Ich habe die <a href={privacyHref}>Datenschutzerklärung</a>{' '}
             gelesen und bin mit der Verarbeitung meiner Daten zur Bearbeitung meiner
@@ -111,6 +140,13 @@ const privacyHref = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/datenschutz/
         </label>
 
         <button type="submit">Jetzt kostenlose Erstanfrage senden →</button>
+        <p
+          class="contact-form__status"
+          data-contact-form-status
+          role="status"
+          aria-live="polite"
+        >
+        </p>
       </form>
     </div>
   </div>
@@ -234,6 +270,32 @@ const privacyHref = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/datenschutz/
   .contact-form {
     display: grid;
     gap: 1rem;
+  }
+
+  .contact-form__honeypot {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .contact-form__status {
+    min-height: 1.4em;
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    line-height: 1.45;
+  }
+
+  .contact-form__status[data-state='success'] {
+    color: var(--color-brand);
+  }
+
+  .contact-form__status[data-state='error'] {
+    color: #9f2d20;
   }
 
   .contact-form__field {

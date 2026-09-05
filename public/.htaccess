@@ -1,0 +1,36 @@
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # HTTPS and the non-www hostname are canonical. The OR condition also
+  # redirects an HTTPS request for www without looping on the canonical URL.
+  RewriteCond %{HTTPS} !=on [OR]
+  RewriteCond %{HTTP_HOST} ^www\.ing-kaltbrunn\.de$ [NC]
+  RewriteRule ^ https://ing-kaltbrunn.de%{REQUEST_URI} [R=301,L]
+
+  RewriteRule ^api/vendor(?:/|$) - [F,L]
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; connect-src 'self'; font-src 'self'; form-action 'self'; frame-ancestors 'none'; frame-src 'none'; img-src 'self'; media-src 'self'; object-src 'none'; script-src 'self' 'unsafe-inline'; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; worker-src 'none'"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), geolocation=(), microphone=(), payment=(), usb=()"
+  Header always set X-Frame-Options "DENY"
+  Header always unset X-Powered-By
+</IfModule>
+
+<IfModule mod_authz_core.c>
+<FilesMatch "(^\.user\.ini$|^\.env|^\.git)">
+    Require all denied
+  </FilesMatch>
+
+  <Files "_contact_core.php">
+    Require all denied
+  </Files>
+
+  <Files "_smtp_mailer.php">
+    Require all denied
+  </Files>
+</IfModule>

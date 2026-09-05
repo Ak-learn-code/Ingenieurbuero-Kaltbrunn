@@ -19,3 +19,7 @@ dist/
 coverage/
 playwright-report/
 test-results/
+
+# Lokale Secrets
+config/smtp-config.php
+ing-kaltbrunn-smtp.php

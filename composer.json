@@ -1,0 +1,12 @@
+{
+  "name": "ingenieurbuero-kaltbrunn/contact-form",
+  "description": "Serverseitiger SMTP-Versand für das Kontaktformular",
+  "license": "proprietary",
+  "require": {
+    "phpmailer/phpmailer": "^7.0"
+  },
+  "config": {
+    "vendor-dir": "public/api/vendor",
+    "sort-packages": true
+  }
+}

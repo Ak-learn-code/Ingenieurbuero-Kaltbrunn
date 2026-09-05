@@ -24,6 +24,16 @@ export default defineConfig(
     },
   },
   {
+    files: ['tests/**/*.mjs'],
+    languageOptions: {
+      globals: {
+        fetch: 'readonly',
+        setTimeout: 'readonly',
+        URLSearchParams: 'readonly',
+      },
+    },
+  },
+  {
     files: ['**/*.astro'],
     languageOptions: {
       parserOptions: {

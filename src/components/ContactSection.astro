@@ -1,6 +1,7 @@
 ---
 import { business } from '@data/business';
 import { contactContent } from '@data/home-content';
+import { contactConstraints } from '@data/contact-constraints';
 
 const privacyHref = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/datenschutz/`;
 const contactEndpoint = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/api/contact.php`;
@@ -61,12 +62,7 @@ const contactEndpoint = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/api/cont
           />
         </div>
 
-        <input
-          name="form_started_at"
-          type="hidden"
-          value=""
-          data-form-started-at
-        />
+        <input name="challenge" type="hidden" value="" data-form-challenge />
 
         <div class="contact-form__field">
           <label for="k-name">Name</label>
@@ -76,7 +72,8 @@ const contactEndpoint = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/api/cont
             type="text"
             placeholder="Max Mustermann"
             autocomplete="name"
-            maxlength="120"
+            minlength={contactConstraints.name.min}
+            maxlength={contactConstraints.name.max}
             required
           />
         </div>
@@ -89,7 +86,8 @@ const contactEndpoint = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/api/cont
             type="tel"
             placeholder="+49 176 1234567"
             autocomplete="tel"
-            maxlength="60"
+            minlength={contactConstraints.phone.min}
+            maxlength={contactConstraints.phone.max}
             required
           />
         </div>
@@ -102,7 +100,8 @@ const contactEndpoint = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/api/cont
             type="email"
             placeholder="max@beispiel.de"
             autocomplete="email"
-            maxlength="190"
+            minlength={contactConstraints.email.min}
+            maxlength={contactConstraints.email.max}
             required
           />
         </div>
@@ -116,7 +115,8 @@ const contactEndpoint = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/api/cont
             name="vehicle"
             type="text"
             placeholder="z. B. HP-XX 123 · BMW X1"
-            maxlength="160"
+            minlength={contactConstraints.vehicle.min}
+            maxlength={contactConstraints.vehicle.max}
           />
         </div>
 
@@ -126,7 +126,8 @@ const contactEndpoint = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/api/cont
             id="k-nachricht"
             name="message"
             placeholder="Was ist passiert? Fahrzeug, Schaden, Wunschtermin – ein paar Sätze genügen."
-            maxlength="5000"
+            minlength={contactConstraints.message.min}
+            maxlength={contactConstraints.message.max}
             required></textarea>
         </div>
 
@@ -383,6 +384,10 @@ const contactEndpoint = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/api/cont
 
   .contact-form button:disabled {
     opacity: 0.78;
+    cursor: default;
+  }
+
+  .contact-form[data-submission-state='sending'] button:disabled {
     cursor: wait;
   }
 

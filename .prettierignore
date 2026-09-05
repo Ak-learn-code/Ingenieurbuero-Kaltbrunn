@@ -13,3 +13,4 @@ fotos/
 *.jpeg
 .github/workflows/pages.yml
 src/assets/
+public/api/vendor/

@@ -16,7 +16,11 @@ Telefon: [+49 176 37998836](tel:+4917637998836)
 
 ## 2. Kontaktformular
 
-Wenn Sie uns über das Kontaktformular eine Anfrage zukommen lassen, werden Ihre Angaben (Name, E-Mail-Adresse, Telefonnummer, Nachricht sowie optional Kennzeichen beziehungsweise Fahrzeug) verschlüsselt an den bei ALL-INKL.COM betriebenen Webserver übertragen und von dort per E-Mail an uns weitergeleitet. Ein externer Formulardienst wird dafür nicht eingesetzt. Wir verarbeiten und speichern die Angaben zur Bearbeitung Ihrer Anfrage sowie für mögliche Rückfragen. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Anfrage) beziehungsweise Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Bearbeitung Ihrer Anfrage). Die Daten werden nach abschließender Bearbeitung Ihrer Anfrage gelöscht, sofern keine gesetzlichen Aufbewahrungspflichten entgegenstehen.
+Wenn Sie uns über das Kontaktformular eine Anfrage zukommen lassen, werden Ihre Angaben (Name, E-Mail-Adresse, Telefonnummer, Nachricht sowie optional Kennzeichen beziehungsweise Fahrzeug) verschlüsselt an den bei ALL-INKL.COM betriebenen Webserver übertragen und von dort per E-Mail an uns weitergeleitet. Ein externer Formulardienst wird dafür nicht eingesetzt. Wir verarbeiten und speichern die Angaben zur Bearbeitung Ihrer Anfrage sowie für mögliche Rückfragen. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Anfrage) beziehungsweise Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Bearbeitung Ihrer Anfrage).
+
+Zum Schutz des Formulars vor automatisiertem Missbrauch wird die IP-Adresse ausschließlich serverseitig mit einem zufällig erzeugten Schlüssel in eine pseudonymisierte Prüfsumme umgewandelt. Zusammen mit kurzlebigen Zeitstempeln dient sie dazu, die Anzahl der Versandversuche innerhalb von zehn Minuten zu begrenzen. Die Roh-IP-Adresse wird hierfür nicht in einer eigenen Rate-Limit-Datei gespeichert. Die Schutzdaten liegen außerhalb des öffentlich erreichbaren Webverzeichnisses und werden nach Ablauf des Zeitfensters automatisch verworfen. Es werden dabei keine Cookies gesetzt und keine externen CAPTCHA- oder Tracking-Dienste eingebunden. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO; unser berechtigtes Interesse liegt im Schutz des Kontaktformulars und unserer technischen Infrastruktur vor Missbrauch.
+
+Die Anfrageinhalte werden nach abschließender Bearbeitung gelöscht, sofern keine gesetzlichen Aufbewahrungspflichten entgegenstehen.
 
 ## 3. Kontaktaufnahme per Telefon, E-Mail oder WhatsApp
 

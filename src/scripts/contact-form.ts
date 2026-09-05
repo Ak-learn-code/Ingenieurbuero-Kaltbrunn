@@ -5,6 +5,21 @@ const submitLabel = 'Jetzt kostenlose Erstanfrage senden →';
 
 type SubmissionState = 'idle' | 'sending' | 'success' | 'error';
 
+function applyLengthValidation(form: HTMLFormElement): void {
+  form
+    .querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
+      'input[minlength], textarea[minlength]',
+    )
+    .forEach((field) => {
+      field.setCustomValidity('');
+      if (field.value.length > 0 && field.value.length < field.minLength) {
+        field.setCustomValidity(
+          `Bitte geben Sie mindestens ${field.minLength} Zeichen ein.`,
+        );
+      }
+    });
+}
+
 function setSubmissionState(
   form: HTMLFormElement,
   state: SubmissionState,
@@ -12,6 +27,13 @@ function setSubmissionState(
 ): void {
   const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
   const status = form.querySelector<HTMLElement>('[data-contact-form-status]');
+
+  form.dataset.submissionState = state;
+  if (state === 'sending') {
+    form.setAttribute('aria-busy', 'true');
+  } else {
+    form.removeAttribute('aria-busy');
+  }
 
   if (button) {
     button.disabled = state === 'sending' || state === 'success';
@@ -55,27 +77,57 @@ function openEmailFallback(data: FormData): void {
   window.location.href = `${business.email.href}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
+async function prepareChallenge(form: HTMLFormElement): Promise<boolean> {
+  const challengeField = form.querySelector<HTMLInputElement>(
+    '[data-form-challenge]',
+  );
+
+  if (!challengeField) return false;
+  if (challengeField.value !== '') return true;
+
+  const challengeUrl = form.action.replace(/contact\.php$/, 'challenge.php');
+
+  try {
+    const response = await fetch(challengeUrl, {
+      method: 'GET',
+      credentials: 'same-origin',
+      cache: 'no-store',
+      headers: {
+        Accept: 'application/json',
+        'X-Contact-Form': '1',
+      },
+    });
+    const result = (await response.json()) as { challenge?: string };
+
+    if (!response.ok || typeof result.challenge !== 'string') return false;
+
+    challengeField.value = result.challenge;
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export function initializeContactForm(): void {
   const form = document.querySelector<HTMLFormElement>(contactFormSelector);
 
   if (!form || form.dataset.initialized === 'true') return;
 
   form.dataset.initialized = 'true';
-  const startedAt = form.querySelector<HTMLInputElement>(
-    '[data-form-started-at]',
-  );
+  const isStaticPreview = window.location.hostname.endsWith('github.io');
 
-  if (startedAt) startedAt.value = String(Date.now());
+  form.addEventListener('input', () => applyLengthValidation(form));
+
+  if (!isStaticPreview) void prepareChallenge(form);
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
+    applyLengthValidation(form);
     if (!form.reportValidity()) return;
 
-    const data = new FormData(form);
-    const isStaticPreview = window.location.hostname.endsWith('github.io');
-
     if (isStaticPreview) {
+      const data = new FormData(form);
       openEmailFallback(data);
       setSubmissionState(
         form,
@@ -87,18 +139,43 @@ export function initializeContactForm(): void {
 
     setSubmissionState(form, 'sending');
 
+    if (!(await prepareChallenge(form))) {
+      setSubmissionState(
+        form,
+        'error',
+        'Das Formular konnte nicht vorbereitet werden. Bitte laden Sie die Seite neu oder rufen Sie kurz an.',
+      );
+      return;
+    }
+
     try {
+      const data = new FormData(form);
       const response = await fetch(form.action, {
         method: 'POST',
         body: data,
-        headers: { Accept: 'application/json' },
+        credentials: 'same-origin',
+        headers: {
+          Accept: 'application/json',
+          'X-Contact-Form': '1',
+        },
       });
       const result = (await response.json()) as { message?: string };
 
       if (!response.ok) {
-        throw new Error(
+        if (response.status === 403) {
+          const challengeField = form.querySelector<HTMLInputElement>(
+            '[data-form-challenge]',
+          );
+          if (challengeField) challengeField.value = '';
+          void prepareChallenge(form);
+        }
+
+        setSubmissionState(
+          form,
+          'error',
           result.message || 'Die Anfrage konnte nicht übermittelt werden.',
         );
+        return;
       }
 
       form.reset();
@@ -108,6 +185,12 @@ export function initializeContactForm(): void {
         result.message || 'Vielen Dank. Ihre Anfrage wurde direkt übermittelt.',
       );
     } catch {
+      const challengeField = form.querySelector<HTMLInputElement>(
+        '[data-form-challenge]',
+      );
+      if (challengeField) challengeField.value = '';
+      void prepareChallenge(form);
+
       setSubmissionState(
         form,
         'error',

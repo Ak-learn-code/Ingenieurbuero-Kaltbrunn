@@ -1,9 +1,12 @@
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
 
+const site = process.env.SITE_URL || 'https://ak-learn-code.github.io';
+const base = process.env.BASE_PATH || '/Ingenieurbuero-Kaltbrunn';
+
 export default defineConfig({
-  site: 'https://ak-learn-code.github.io',
-  base: '/Ingenieurbuero-Kaltbrunn',
+  site,
+  base,
   devToolbar: {
     enabled: false,
   },

@@ -11,7 +11,7 @@ Verantwortlich für die Datenverarbeitung auf dieser Website ist:
 Nurettin Sogukcesme  
 Mannheimer Straße 1  
 64646 Heppenheim  
-E-Mail: [info@ing-nuri.de](mailto:info@ing-nuri.de)  
+E-Mail: [info@ing-kaltbrunn.de](mailto:info@ing-kaltbrunn.de)<br />
 Telefon: [+49 176 37998836](tel:+4917637998836)
 
 ## 2. Kontaktformular
@@ -22,13 +22,17 @@ Wenn Sie uns über das Kontaktformular eine Anfrage zukommen lassen, werden Ihre
 
 Kontaktieren Sie uns per Telefon oder E-Mail, wird Ihre Anfrage inklusive aller daraus hervorgehenden personenbezogenen Daten zur Bearbeitung gespeichert. Für die WhatsApp-Kontaktfunktion nutzen wir den Dienst der WhatsApp Ireland Limited (bzw. deren Konzernmutter Meta Platforms, USA). Bei Nutzung dieses Buttons werden Daten an WhatsApp übermittelt und dort nach deren eigenen Datenschutzbestimmungen verarbeitet. Die Nutzung ist freiwillig; alternativ erreichen Sie uns per Telefon, E-Mail oder klassischem Kontaktformular.
 
-## 4. Hosting & Server-Logfiles
+## 4. Hosting bei ALL-INKL.COM & Server-Logfiles
 
-Beim Aufruf dieser Website erhebt unser Hostinganbieter automatisch technische Informationen (sogenannte Server-Logfiles), z. B. IP-Adresse, Datum und Uhrzeit des Zugriffs, Browsertyp und aufgerufene Seite. Diese Daten dienen der technischen Bereitstellung und Sicherheit der Website (Art. 6 Abs. 1 lit. f DSGVO) und werden nicht mit anderen Datenquellen zusammengeführt.
+Diese Website wird bei **ALL-INKL.COM – Neue Medien Münnich**, Inhaber René Münnich, Hauptstraße 68, 02742 Friedersdorf, gehostet. Weitere Informationen zur Datenverarbeitung durch den Hostinganbieter finden Sie in den [Datenschutzinformationen von ALL-INKL.COM](https://all-inkl.com/datenschutzinformationen).
 
-## 5. Keine externen Dienste
+Beim Aufruf der Website verarbeitet der Hostinganbieter automatisch Daten in sogenannten Server-Logfiles. Dazu können insbesondere die IP-Adresse des anfragenden Endgeräts, Datum und Uhrzeit des Zugriffs, die abgerufene Datei beziehungsweise Seite, der Zugriffsstatus, die übertragene Datenmenge, die zuvor besuchte Seite sowie Angaben zu Browser, Betriebssystem, Sprache und Browserversion gehören.
 
-Diese Website lädt keinerlei Inhalte von Drittanbietern nach: Schriftarten, Bilder und Skripte sind vollständig in der Seite enthalten. Es werden keine Google Fonts eingebunden, keine Cookies gesetzt und keine Analysewerkzeuge eingesetzt. Ihre IP-Adresse wird dadurch an keinen Drittanbieter übermittelt.
+Die Verarbeitung ist erforderlich, um die Website technisch auszuliefern sowie ihren sicheren und stabilen Betrieb zu gewährleisten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO. Unser berechtigtes Interesse liegt in der zuverlässigen Bereitstellung und Absicherung unseres Internetangebots. ALL-INKL.COM verarbeitet die Daten in unserem Auftrag auf Grundlage eines Vertrags zur Auftragsverarbeitung gemäß Art. 28 DSGVO. Eine Auswertung der Server-Logfiles zu Marketingzwecken findet durch uns nicht statt.
+
+## 5. Keine automatisch geladenen externen Inhalte
+
+Abgesehen von der technisch notwendigen Verarbeitung durch den Hostinganbieter lädt diese Website beim bloßen Seitenaufruf keine Inhalte externer Drittanbieter nach. Schriftarten, Bilder und Skripte werden lokal bereitgestellt. Es werden keine Google Fonts eingebunden, keine Analysewerkzeuge eingesetzt und durch diese Website keine Cookies gesetzt. Eine Verbindung zu WhatsApp entsteht erst, wenn Sie den entsprechenden Link selbst aufrufen.
 
 ## 6. Ihre Rechte
 

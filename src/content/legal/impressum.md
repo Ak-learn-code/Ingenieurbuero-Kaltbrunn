@@ -12,7 +12,7 @@ Mannheimer Straße 1
 64646 Heppenheim
 
 **Telefon:** [+49 176 37998836](tel:+4917637998836)  
-**E-Mail:** [info@ing-nuri.de](mailto:info@ing-nuri.de)
+**E-Mail:** [info@ing-kaltbrunn.de](mailto:info@ing-kaltbrunn.de)
 
 **Berufsbezeichnung:**  
 Ingenieur (B. Eng. Maschinenbau)  

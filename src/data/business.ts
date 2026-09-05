@@ -16,8 +16,8 @@ export const business = {
     whatsapp: 'https://wa.me/4917637998836',
   },
   email: {
-    address: 'info@ing-nuri.de',
-    href: 'mailto:info@ing-nuri.de',
+    address: 'info@ing-kaltbrunn.de',
+    href: 'mailto:info@ing-kaltbrunn.de',
   },
   openingHours: {
     display: 'Mo–Fr 8:00–18:00 Uhr',

@@ -1,3 +1,5 @@
+import { business } from '@data/business';
+
 const contactFormSelector = '[data-contact-form]';
 
 export function initializeContactForm(): void {
@@ -30,7 +32,7 @@ export function initializeContactForm(): void {
       .filter((line): line is string => line !== null)
       .join('\n');
 
-    window.location.href = `mailto:info@ing-nuri.de?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = `${business.email.href}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
     const submitButton = form.querySelector<HTMLButtonElement>(
       'button[type="submit"]',

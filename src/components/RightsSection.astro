@@ -26,7 +26,10 @@ const rightsMedia = [
   <div class="rights__inner container-wide">
     <header class="rights__header">
       <h2 id="rights-heading">
-        {rightsContent.heading}<AiDisclosureMarker />
+        {rightsContent.heading}<AiDisclosureMarker
+          href="#ki-hinweis-recht"
+          ariaLabel="Hinweis zu teilweise KI-generierten illustrativen Darstellungen im Bereich Ihr Recht"
+        />
       </h2>
       <p>{rightsContent.introduction}</p>
     </header>
@@ -57,6 +60,12 @@ const rightsMedia = [
         ))
       }
     </div>
+
+    <p class="rights__ai-note" id="ki-hinweis-recht">
+      ¹ Die Abbildungen im Bereich Ihr Recht sind illustrative Symbolbilder
+      (teilweise KI-generiert) und dienen ausschließlich der visuellen
+      Veranschaulichung.
+    </p>
   </div>
 </section>
 
@@ -103,6 +112,15 @@ const rightsMedia = [
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: clamp(1rem, 2vw, 1.5rem);
     margin-top: clamp(5rem, 8vw, 8rem);
+  }
+
+  .rights__ai-note {
+    max-width: 44rem;
+    margin: clamp(1.5rem, 2.5vw, 2.25rem) 0 0;
+    color: rgb(255 255 255 / 66%);
+    font-size: 0.78rem;
+    line-height: 1.55;
+    scroll-margin-top: calc(var(--header-height) + 2rem);
   }
 
   .rights__point {
@@ -240,6 +258,11 @@ const rightsMedia = [
     .rights__points {
       gap: 1rem;
       margin-top: 4rem;
+    }
+
+    .rights__ai-note {
+      margin-top: 1.35rem;
+      font-size: 0.72rem;
     }
 
     .rights__point {

@@ -1,9 +1,17 @@
+---
+interface Props {
+  href?: string;
+  ariaLabel?: string;
+}
+
+const {
+  href = '#ki-hinweis-leistungen',
+  ariaLabel = 'Hinweis zu teilweise KI-generierten illustrativen Darstellungen',
+} = Astro.props;
+---
+
 <sup class="ai-disclosure-marker">
-  <a
-    href="#ki-hinweis"
-    aria-label="Hinweis zu teilweise KI-generierten illustrativen Darstellungen"
-    >¹</a
-  >
+  <a href={href} aria-label={ariaLabel}>¹</a>
 </sup>
 
 <style>

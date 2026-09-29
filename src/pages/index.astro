@@ -12,9 +12,10 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 
 const title = seo.defaultTitle;
 const description = seo.defaultDescription;
+const canonical = new URL('/', Astro.site);
 ---
 
-<BaseLayout {title} {description} noIndex>
+<BaseLayout {title} {description} {canonical}>
   <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
   <Header />
   <main id="main-content">

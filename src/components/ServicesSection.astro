@@ -120,6 +120,12 @@ const serviceMedia = {
       }
     </div>
   </div>
+
+  <p class="services__ai-note container-wide" id="ki-hinweis">
+    ¹ Die Abbildungen in der Leistungssektion sind illustrative Symbolbilder
+    (teilweise KI-generiert) und dienen ausschließlich der visuellen
+    Veranschaulichung.
+  </p>
 </section>
 
 <script>
@@ -251,6 +257,15 @@ const serviceMedia = {
     width: max(var(--page-gutter), calc((100vw - var(--container-wide)) / 2));
     flex: 0 0 auto;
     content: '';
+  }
+
+  .services__ai-note {
+    max-width: var(--container-wide);
+    margin-top: clamp(1.5rem, 2.5vw, 2.25rem);
+    color: var(--color-text-muted);
+    font-size: 0.78rem;
+    line-height: 1.55;
+    scroll-margin-top: calc(var(--header-height) + 2rem);
   }
 
   .service-card {
@@ -411,6 +426,11 @@ const serviceMedia = {
     .services__rail {
       margin-top: 2.5rem;
       padding-bottom: 1rem;
+    }
+
+    .services__ai-note {
+      margin-top: 1.35rem;
+      font-size: 0.72rem;
     }
 
     .service-card {

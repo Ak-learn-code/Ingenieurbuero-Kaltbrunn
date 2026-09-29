@@ -1,13 +1,8 @@
-name: Seite veröffentlichen
-
-# Veröffentlicht wird über den Zweig gh-pages, nicht über die Pages-API.
-# Grund: das Workflow-Token darf keine Pages-Site anlegen ("Resource not
-# accessible by integration"), ein Zweig namens gh-pages schaltet Pages
-# dagegen ohne Zutun in den Einstellungen frei.
+name: Astro auf GitHub Pages veröffentlichen
 
 on:
   push:
-    branches: [main]
+    branches: [redesign]
   workflow_dispatch:
 
 permissions:
@@ -23,68 +18,38 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Nachgeladene Fremdressourcen sind der DSGVO-Angriffspunkt und kosten
-      # Ladezeit. Verweise im Text (Links, canonical, og:url) sind erlaubt.
-      - name: Prüfen, dass die Seiten keine externen Dienste nachladen
-        run: |
-          muster='<script[^>]+src="https?://|<iframe|<img[^>]+src="https?://|<link[^>]+rel="(stylesheet|preload)"[^>]+href="https?://|@import[^;]*https?://|url\((["'"'"']?)https?://'
-          for datei in index.html referenzen.html; do
-            if grep -Eqi "$muster" "$datei"; then
-              echo "::error file=$datei::lädt externe Ressourcen nach"
-              grep -Eoi "$muster" "$datei" | sort -u
-              exit 1
-            fi
-          done
-          echo "keine externen Ressourcen"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
 
-      # referenzen.html wird aus index.html gebaut. Läuft der Bau nicht mehr
-      # durch oder weicht das Ergebnis ab, ist die Datei von Hand geändert
-      # worden – dann laufen Kopf, Navigation und Fußzeile auseinander.
-      - name: Prüfen, dass referenzen.html zum Bauskript passt
-        run: |
-          cp referenzen.html /tmp/vorher.html
-          python3 bau_referenzen.py
-          if ! diff -q /tmp/vorher.html referenzen.html >/dev/null; then
-            echo "::error file=referenzen.html::weicht vom Bauskript ab – bitte 'python3 bau_referenzen.py' laufen lassen und das Ergebnis einchecken"
-            diff /tmp/vorher.html referenzen.html | head -40
-            exit 1
-          fi
-          echo "referenzen.html ist aktuell"
+      - name: Abhängigkeiten installieren
+        run: npm ci
 
-      # Monogramm, Wagen, Stadt und Figur entstehen in marke/ (bau_k.py misst
-      # Nurettins Vorlage, bau_wagen.py spurt den Wagen daraus). Beides
-      # braucht Pillow, NumPy und potrace – statt die hier zu installieren,
-      # wird gegen die eingecheckten Bauergebnisse geprueft. Das faengt den
-      # Fall, um den es geht: jemand schiebt in index.html von Hand am Pfad.
-      - name: Prüfen, dass Monogramm und Wagen zu marke/ passen
+      - name: Qualität prüfen
         run: |
-          for teil in k wagen stadt mensch; do
-            if ! grep -qF "$(cat marke/$teil.svg)" index.html; then
-              echo "::error file=index.html::$teil weicht von marke/$teil.svg ab"
-              exit 1
-            fi
-          done
-          echo "Monogramm und Wagen sind aktuell"
+          npm run check
+          npm run typecheck
+          npm run lint
+          npm run format:check
 
-      - name: Seite einsammeln
+      - name: GitHub-Pages-Build erzeugen
         run: |
-          mkdir -p _site
-          cp index.html      _site/index.html
-          cp referenzen.html _site/referenzen.html
-          cp robots.txt      _site/robots.txt
-          mkdir -p _site/fotos
-          cp fotos/*.webp    _site/fotos/
-          touch _site/.nojekyll
+          SITE_URL=https://ak-learn-code.github.io \
+          BASE_PATH=/Ingenieurbuero-Kaltbrunn \
+          npm run build
 
       - name: Auf gh-pages veröffentlichen
         run: |
-          cd _site
+          mkdir /tmp/site
+          cp -a dist/. /tmp/site/
+          touch /tmp/site/.nojekyll
+          cd /tmp/site
           git init -q -b gh-pages
-          git config user.name  "github-actions[bot]"
+          git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          git commit -q -m "Seite aus ${GITHUB_SHA::7}"
+          git commit -q -m "Astro-Seite aus ${GITHUB_SHA::7}"
           git push -q --force \
             "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" \
             gh-pages
-          echo "veröffentlicht: https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}/"

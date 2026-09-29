@@ -24,7 +24,11 @@ Die Anfrageinhalte werden nach abschließender Bearbeitung gelöscht, sofern kei
 
 ## 3. Kontaktaufnahme per Telefon, E-Mail oder WhatsApp
 
-Kontaktieren Sie uns per Telefon oder E-Mail, wird Ihre Anfrage inklusive aller daraus hervorgehenden personenbezogenen Daten zur Bearbeitung gespeichert. Für die WhatsApp-Kontaktfunktion nutzen wir den Dienst der WhatsApp Ireland Limited (bzw. deren Konzernmutter Meta Platforms, USA). Bei Nutzung dieses Buttons werden Daten an WhatsApp übermittelt und dort nach deren eigenen Datenschutzbestimmungen verarbeitet. Die Nutzung ist freiwillig; alternativ erreichen Sie uns per Telefon, E-Mail oder klassischem Kontaktformular.
+Kontaktieren Sie uns per Telefon oder E-Mail, wird Ihre Anfrage inklusive aller daraus hervorgehenden personenbezogenen Daten zur Bearbeitung gespeichert.
+
+Beim Anklicken eines WhatsApp-Links verlassen Sie unsere Website und stellen selbst eine Verbindung zu WhatsApp her. Dabei verarbeitet WhatsApp Ireland Limited als eigenständig Verantwortliche Daten nach den eigenen Datenschutzbestimmungen. Wenn Sie uns anschließend über WhatsApp schreiben, können insbesondere Ihre Telefonnummer, Ihr Profilname sowie der Inhalt Ihrer Nachricht verarbeitet werden. Weitere Informationen zur Verarbeitung durch WhatsApp, einschließlich möglicher Datenübermittlungen, finden Sie in der [Datenschutzrichtlinie von WhatsApp](https://www.whatsapp.com/legal/privacy-policy-eea?lang=de).
+
+Die Nutzung von WhatsApp ist freiwillig; alternativ erreichen Sie uns per Telefon, E-Mail oder klassischem Kontaktformular.
 
 ## 4. Hosting bei ALL-INKL.COM & Server-Logfiles
 

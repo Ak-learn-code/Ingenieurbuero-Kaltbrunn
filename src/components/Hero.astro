@@ -1,6 +1,7 @@
 ---
 import heroImage from '@assets/images/hero/audi-front-vermessung-anonymisiert.png';
 import { heroContent } from '@data/home-content';
+import { Picture } from 'astro:assets';
 import HeroContact from './HeroContact.astro';
 
 const heroHeadingWords = heroContent.heading.split(' ');
@@ -86,16 +87,18 @@ const heroHeadingSegments = heroHeadingWords.flatMap((word, wordIndex) => {
   </div>
 
   <div class="hero__media" data-hero-media>
-    <picture>
-      <img
-        src={heroImage.src}
-        alt="Frontansicht eines Audi mit Maßstab zur Fahrzeugdokumentation"
-        width={heroImage.width}
-        height={heroImage.height}
-        fetchpriority="high"
-        decoding="async"
-      />
-    </picture>
+    <Picture
+      src={heroImage}
+      formats={['avif', 'webp']}
+      fallbackFormat="webp"
+      widths={[480, 768, 1024, 1448]}
+      sizes="100vw"
+      quality={85}
+      alt="Frontansicht eines Audi mit Maßstab zur Fahrzeugdokumentation"
+      fetchpriority="high"
+      loading="eager"
+      decoding="async"
+    />
   </div>
 </section>
 
